@@ -1,10 +1,10 @@
 #ifndef CUB_H
 # define CUB_H
 
-//Includes
+// 	---Includes---
 
 
-//Structures
+//	---Structures---
 typedef struct s_vector
 {
 	int x;
@@ -31,5 +31,9 @@ typedef struct s_map
 	t_color 	sky;
 }	t_map;
 
-//Functions
+//	--- MAIN.C ---
+
+//	--- PARSE.C ---
+
+//	--- GAME.C ---
 #endif
