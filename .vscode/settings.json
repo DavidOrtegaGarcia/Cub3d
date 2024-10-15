@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"stat.h": "c"
+		"mlx42.h": "c",
+		"cub.h": "c"
 	}
 }

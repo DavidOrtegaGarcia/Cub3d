@@ -4,13 +4,6 @@
 #define WIDTH 256
 #define HEIGHT 256
 
-// Exit the program as failure.
-static void ft_errorr(void)
-{
-	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
 // Print the window width and height.
 static void hook(void* param)
 {
@@ -31,7 +24,7 @@ void init_game(t_map tmap)
 	//mlx_set_setting(MLX_MAXIMIZED, true);
 	mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
 	if (mlx == NULL)
-		ft_errorr();
+		ft_error("error");
 	/* Do stuff */
 
 	// Create and display the image.

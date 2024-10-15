@@ -67,6 +67,9 @@ void	ft_get_doc(t_map *map, char *path, int size);
 int		ft_get_rows(t_map *map, char *path);
 t_map	ft_parse(char *path);
 char	*clean_line(char *line);
+void free_all_doc(char ***all_doc);
 
 //	--- GAME.C ---
+void	init_game (t_map tmap);
+void 	ft_error(const char *msg);
 #endif

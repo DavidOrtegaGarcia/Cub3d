@@ -1,5 +1,5 @@
 CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
-  /home/daortega/Documents/Cub3d/mlx_42/lib/glad/glad.c \
+  /home/emiro-co/Desktop/Cub3d/mlx_42/lib/glad/glad.c \
   /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
@@ -27,8 +27,8 @@ CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
   /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/string.h \
-  /home/daortega/Documents/Cub3d/mlx_42/include/glad/glad.h \
-  /home/daortega/Documents/Cub3d/mlx_42/include/KHR/khrplatform.h \
+  /home/emiro-co/Desktop/Cub3d/mlx_42/include/glad/glad.h \
+  /home/emiro-co/Desktop/Cub3d/mlx_42/include/KHR/khrplatform.h \
   /usr/lib/llvm-12/lib/clang/12.0.1/include/stdint.h \
   /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \

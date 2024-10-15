@@ -1,7 +1,7 @@
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/mlx42.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/edit_cache.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/rebuild_cache.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/list_install_components.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/install.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/install/local.dir
-/home/daortega/Documents/Cub3d/mlx_42/build/CMakeFiles/install/strip.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/mlx42.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/edit_cache.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/rebuild_cache.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/list_install_components.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/install.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/install/local.dir
+/home/emiro-co/Desktop/Cub3d/mlx_42/build/CMakeFiles/install/strip.dir
