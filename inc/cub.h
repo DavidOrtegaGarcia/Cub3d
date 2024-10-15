@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
+# include "../mlx_42/include/MLX42/MLX42.h"
 
 //	---Structures---
 typedef struct s_vector
@@ -22,19 +23,6 @@ typedef struct s_color
 	int g;
 	int b;
 }	t_color;
-
-
-typedef struct s_map
-{
-	t_check		check;
-	char		**content;
-	char 		*north;
-	char 		*south;
-	char 		*east;
-	char 		*west;
-	t_color 	floor;
-	t_color 	celling;
-}	t_map;
 
 typedef struct s_check
 {
@@ -58,6 +46,18 @@ typedef struct s_check
 	int			map_columns;
 }	t_check;
 
+typedef struct s_map
+{
+	t_check		check;
+	char		**content;
+	char 		*north;
+	char 		*south;
+	char 		*east;
+	char 		*west;
+	t_color 	floor;
+	t_color 	celling;
+}	t_map;
+
 //	--- MAIN.C ---
 
 //	--- PARSE.C ---
@@ -68,6 +68,7 @@ t_map	ft_parse(char *path);
 char	*clean_line(char *line);
 
 //	--- GAME.C ---
+void init_game(t_map tmap);
 
 //	--- ERROR_FREE.C ---
 void free_all_doc(char ***all_doc);
