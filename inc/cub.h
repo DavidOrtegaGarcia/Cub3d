@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
+#include "libft.h" 
 
 //	---Structures---
 typedef struct s_vector
@@ -22,19 +23,6 @@ typedef struct s_color
 	int g;
 	int b;
 }	t_color;
-
-
-typedef struct s_map
-{
-	t_check		check;
-	char		**content;
-	char 		*north;
-	char 		*south;
-	char 		*east;
-	char 		*west;
-	t_color 	floor;
-	t_color 	celling;
-}	t_map;
 
 typedef struct s_check
 {
@@ -57,6 +45,18 @@ typedef struct s_check
 	int			map_lines;
 	int			map_columns;
 }	t_check;
+
+typedef struct s_map
+{
+	t_check		check;
+	char		**content;
+	char 		*north;
+	char 		*south;
+	char 		*east;
+	char 		*west;
+	t_color 	floor;
+	t_color 	celling;
+}	t_map;
 
 //	--- MAIN.C ---
 
