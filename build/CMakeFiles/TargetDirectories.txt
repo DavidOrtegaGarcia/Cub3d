@@ -1,7 +1,0 @@
-/home/daortega/Documents/Cub3d/build/CMakeFiles/mlx42.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/edit_cache.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/rebuild_cache.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/list_install_components.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/install.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/install/local.dir
-/home/daortega/Documents/Cub3d/build/CMakeFiles/install/strip.dir

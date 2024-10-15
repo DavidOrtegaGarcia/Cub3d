@@ -7,7 +7,8 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
-#include "libft.h" 
+# include "libft.h" 
+# include "../mlx_42/include/MLX42/MLX42.h"
 
 //	---Structures---
 typedef struct s_vector
@@ -68,9 +69,4 @@ t_map	ft_parse(char *path);
 char	*clean_line(char *line);
 
 //	--- GAME.C ---
-
-//	--- ERROR_FREE.C ---
-void free_all_doc(char ***all_doc);
-void ft_error(const char *msg);
-
 #endif
