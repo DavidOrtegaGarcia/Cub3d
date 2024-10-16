@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	celling.r = 89;
 	celling.g = 30;
-	celling.r = 30;
+	celling.b = 30;
 
 	tmap.north = north;
 	tmap.south = south;
@@ -31,11 +31,11 @@ int main(int argc, char *argv[])
 	init_game(tmap);
 
 
-	t_map map;
+	/*t_map map;
 	
 	ft_check_input(&map, argc, &argv[1]);
 	
 	ft_get_doc(&map, argv[1], ft_get_rows(&map, map.check.path));
 	map = ft_parse(argv[1]);
-	free_all_doc(&map.check.all_doc);
+	free_all_doc(&map.check.all_doc);*/
 }
