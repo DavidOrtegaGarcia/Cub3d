@@ -1,29 +1,30 @@
 #include "cub.h"
 
-void ft_check_input(t_map *map, int argc, char *argv[])
+void ft_check_input(t_map *map, int argc, char *argv)
 {
     int len;
     char *str;
-
-    if (argc != 2) {
+    if (argc != 2)
+    {
         if (argc < 2)
             ft_error("Missing Argv");
         else
             ft_error("Multiple Argv Detected");
     }
 
-    str = argv[1];
-    len = ft_strlen(str);
+    str = argv;
+    len = (int)ft_strlen(str);
     map->check.path = str;
 
-    if (len < 4) {
+    if (len < 4)
+    {
         map->check.format_error = 1;
         ft_error("File format error");
-    } else if (ft_strcmp(str + len - 4, ".cub") != 0) {
+    } 
+    else if (ft_strcmp(str + len - 4, ".cub") != 0)
+    {
         map->check.format_error = 1;
         ft_error("File format error");
-    } else {
-        map->check.format_error = 0;
     }
 }
 
@@ -76,8 +77,7 @@ int	ft_get_rows(t_map *map, char *path)
 	close(fd);
 	map->check.all_doc = (char **)malloc(sizeof(char *) * (i + 1));
     if (!map->check.all_doc)
-    {
         ft_error("Memory allocation failed.");
-    }
+    map->check.map_lines = i;
 	return (i);
 }

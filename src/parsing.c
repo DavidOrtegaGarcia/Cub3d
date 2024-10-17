@@ -1,17 +1,14 @@
 #include "cub.h"
 
-t_map	ft_parse(char *path)
+void	ft_parse(t_map *map)
 {
-	t_map	map = {0};
-    (void)path; 
-	// puede ser mejor hacerlo con un switch y ir pasando lineas
-	//map.north = get_path(ft_find_line("NO"));
-	//map.south = get_path(ft_find_line("SO"));
-	//map.west = get_path(ft_find_line("WE"));
-	//map.east = get_path(ft_find_line("EA"));
-	/* map.floor = get_color(ft_find_line("F"));
-	map.celling = get_color(ft_find_line("C")); */
-
+	get_paths(map);
+	puts(map->north);
+	puts(map->south);
+	puts(map->west);
+	puts(map->east);
+	ft_printf("%d, %d, %d\n", map->celling.r, map->celling.g, map->celling.b);
+	ft_printf("%d, %d, %d\n", map->floor.r, map->floor.g, map->floor.b);
 	// find line: 	busca una linea que quitando espacios si hay, empieze con el texto enviado
 	// get_path:	extraer path de la linea
 	// get_color:	extraer color de la linea
@@ -24,7 +21,7 @@ t_map	ft_parse(char *path)
 	//puede que se puedan juntar las dos funciones en una sola
 
 	// sumarle a map.check.map_lines para saber donde empezar a contar
-	return (map);
+	//return (map);
 }
 
 char	*clean_line(char *line)

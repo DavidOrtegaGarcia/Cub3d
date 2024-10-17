@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"mlx42.h": "c",
-		"cub.h": "c"
+		"cub.h": "c",
+		"random": "c"
 	}
 }

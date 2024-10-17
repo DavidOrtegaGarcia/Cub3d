@@ -45,6 +45,12 @@ typedef struct s_check
 	int			lines_to_map;
 	int			map_lines;
 	int			map_columns;
+	int			found_north;
+	int			found_south;
+	int			found_west;
+	int			found_east;
+	int			found_floor;
+	int			found_celling;
 }	t_check;
 
 typedef struct s_map
@@ -62,12 +68,17 @@ typedef struct s_map
 //	--- MAIN.C ---
 
 //	--- PARSE.C ---
-void	ft_check_input(t_map *map, int argc, char *argv[]);
+void	ft_check_input(t_map *map, int argc, char *argv);
 void	ft_get_doc(t_map *map, char *path, int size);
 int		ft_get_rows(t_map *map, char *path);
-t_map	ft_parse(char *path);
+void	ft_parse(t_map *map);
 char	*clean_line(char *line);
 void free_all_doc(char ***all_doc);
+t_color get_color(char *color);
+void get_paths(t_map *map);
+int found_all(t_map *map);
+void assign(t_map *map, char *path, char *element);
+void assign_colors(t_map *map, char *path, char *element);
 
 //	--- GAME.C ---
 void	init_game (t_map tmap);
