@@ -6,8 +6,8 @@ YELLOW	=	\033[38;5;190m
 
 #-------------<COMMANDS>------------
 CC 		= 	cc
-CFLAGS 	= 	-Wall -Wextra -Werror -fsanitize=address
-
+CFLAGS 	= 	-Wall -Wextra -Werror 
+#-fsanitize=address
 # Includes and libraries
 INCLUDE	=	-I./inc -I./libft -I./mlx_42/include
 LIBS	=	./mlx_42/build/libmlx42.a -ldl -lglfw -pthread -lm
@@ -15,7 +15,7 @@ LIBS	=	./mlx_42/build/libmlx42.a -ldl -lglfw -pthread -lm
 #--------------<SRC>----------------
 NAME	=	cub3d
 SRC		=	src/
-CFILES	=	main.c parsing.c game.c
+CFILES	=	main.c parsing.c game.c utils.c check.c paths.c assign_paths.c
 
 SRCC	=	$(addprefix $(SRC), $(CFILES))
 
