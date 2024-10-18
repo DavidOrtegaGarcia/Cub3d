@@ -20,3 +20,11 @@ void free_all_doc(char ***all_doc)
     free(*all_doc);
     *all_doc = NULL;
 }
+
+char	**free_matrix(char **matrix, int i)
+{
+	while (--i > -1)
+		free(matrix[i]);
+	free(matrix);
+	return (NULL);
+}

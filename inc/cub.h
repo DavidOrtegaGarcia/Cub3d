@@ -78,7 +78,9 @@ t_color get_color(char *color);
 void get_paths(t_map *map);
 int found_all(t_map *map);
 void assign(t_map *map, char *path, char *element);
-void assign_colors(t_map *map, char *path, char *element);
+char	**free_matrix(char **matrix, int i);
+char *is_element(char *str);
+void assign_north(t_map *map, char *path);
 
 //	--- GAME.C ---
 void	init_game (t_map tmap);
