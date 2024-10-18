@@ -1,6 +1,6 @@
 #include "cub.h"
 
-void ft_check_input(t_map *map, int argc, char *argv)
+void    ft_check_input(t_map *map, int argc, char *argv)
 {
     int len;
     char *str;
@@ -50,6 +50,7 @@ void ft_get_doc(t_map *map, char *path, int size)
         map->check.all_doc[i] = line;
         i++;
     }
+    map->check.map_lines = i;
     map->check.all_doc[size] = NULL;
     close(fd);
 }
@@ -62,7 +63,8 @@ int	ft_get_rows(t_map *map, char *path)
 
 	i = 0;
     fd = open(path, O_RDONLY);
-    if (fd < 0) {
+    if (fd < 0) 
+    {
         ft_error("Failed to open the file.");
     }
 	str = get_next_line(fd);

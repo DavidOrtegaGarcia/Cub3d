@@ -9,6 +9,7 @@ void	ft_parse(t_map *map)
 	puts(map->east);
 	ft_printf("%d, %d, %d\n", map->celling.r, map->celling.g, map->celling.b);
 	ft_printf("%d, %d, %d\n", map->floor.r, map->floor.g, map->floor.b);
+	ft_printf("\nLines to map: %d", map->check.lines_to_map);
 	// find line: 	busca una linea que quitando espacios si hay, empieze con el texto enviado
 	// get_path:	extraer path de la linea
 	// get_color:	extraer color de la linea
