@@ -10,13 +10,21 @@
 # include "libft.h" 
 # include "../mlx_42/include/MLX42/MLX42.h"
 
+// --Macros MLX-- 
+# define S_WIDTH 1920 //Screen width
+# define S_HEIGHT 1080 //Screen heigth
+# define TILE_SIZE 30 // tile size
+# define FOV 60 // field of view
+# define ROTATION_SPEED 0.045 // rotation speed
+# define PLAYER_SPEED 4 // player speed
+
 //	---Structures---
-typedef struct s_vector
+/*typedef struct s_vector
 {
 	int x;
 	int y;
 	int z;
-}	t_vector;
+}	t_vector;*/
 
 typedef struct s_color
 {
@@ -59,6 +67,22 @@ typedef struct s_map
 	t_color 	celling;
 }	t_map;
 
+typedef struct s_data //the data structure
+{
+	int  p_x;  // player x position in the map
+	int  p_y;  // player y position in the map
+	int  w_map;  // map width
+	int  h_map;  // map height
+} t_data;
+
+typedef struct s_mlx //the mlx structure
+{
+ mlx_image_t  *img; // the image
+ mlx_t   *mlx; // the mlx pointer
+ //t_ray   *ray; // the ray structure
+ t_map   tmap; // the data structure
+ //t_player  *ply; // the player structure
+} t_mlx;
 //	--- MAIN.C ---
 
 //	--- PARSE.C ---

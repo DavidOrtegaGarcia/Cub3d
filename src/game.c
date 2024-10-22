@@ -6,16 +6,13 @@
 /*   By: daortega <daortega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:13:17 by daortega          #+#    #+#             */
-/*   Updated: 2024/10/16 18:02:29 by daortega         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:33:10 by daortega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub.h"
-
-#define WIDTH 1700
-#define HEIGHT 1200
-#define BPP sizeof(int32_t) //Bytes per pixel
+//#define BPP sizeof(int32_t) //Bytes per pixel
 
 int	my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color)
 {
@@ -47,32 +44,31 @@ void resize_hook(int32_t width, int32_t height, void* param)
 void init_game(t_map tmap)
 {
 	(void)tmap;
-	mlx_t		*mlx;
-	mlx_image_t	*img;
+	t_mlx	tmlx;
 	uint32_t y;
 	uint32_t x;
 	y = 0;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
-	if (!mlx)
+	tmlx.mlx = mlx_init(S_WIDTH, S_HEIGHT, "Cub3d", true);
+	if (!tmlx.mlx)
 		exit(EXIT_FAILURE);
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	tmlx.img = mlx_new_image(tmlx.mlx, S_WIDTH, S_HEIGHT);
 	
 	//Insertar pixeles
-	mlx_image_to_window(mlx, img, 0, 0);
-	while (y < img->height / 2)
+	/*mlx_image_to_window(tmlx.mlx, tmlx.img, 0, 0);
+	while (y < tmlx.img->height / 2)
 	{
 		x = 0;
-		while (x < img->width / 2)
+		while (x < tmlx.img->width / 2)
 		{
-			my_put_pixel(img, x, y,  get_rgba(tmap.celling.r, 
+			my_put_pixel(tmlx.img, x, y,  get_rgba(tmap.celling.r, 
 			tmap.celling.g, tmap.celling.b, 255));
 			x++;
 		}
 		y++;
-	}
+	}*/
 	//mlx_loop_hook(mlx, &hook, mlx);
-	mlx_resize_hook(mlx, &resize_hook, img);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_resize_hook(tmlx.mlx, &resize_hook, tmlx.img);
+	mlx_loop(tmlx.mlx);
+	mlx_terminate(tmlx.mlx);
 }
