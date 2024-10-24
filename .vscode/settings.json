@@ -1,5 +1,13 @@
 {
 	"files.associations": {
-		"stat.h": "c"
+		"mlx42.h": "c",
+		"cub.h": "c",
+		"random": "c",
+		"*.tcc": "c",
+		"deque": "c",
+		"string": "c",
+		"vector": "c",
+		"system_error": "c",
+		"array": "c"
 	}
 }
