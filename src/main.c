@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-//
+  
 	//t_map 	tmap;
 	//t_color floor;
 	//t_color celling;
