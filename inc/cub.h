@@ -19,12 +19,11 @@
 # define PLAYER_SPEED 4 // player speed
 
 //	---Structures---
-/*typedef struct s_vector
+typedef struct s_point
 {
 	int x;
 	int y;
-	int z;
-}	t_vector;*/
+}	t_point;
 
 typedef struct s_color
 {
@@ -60,6 +59,7 @@ typedef struct s_map
 	char		*west;
 	t_color		floor;
 	t_color		celling;
+	t_point		p_plyr;
 }	t_map;
 
 typedef struct s_player //the player structure
@@ -93,7 +93,7 @@ typedef struct s_mlx //the mlx structure
 	mlx_image_t	*img; // the image
 	mlx_t		*mlx; // the mlx pointer
 	//t_ray		tray; // the ray structure
-	t_data		tdata; // the data structure
+	t_map		tmap; // the data structure
 	//t_player	tply; // the player structure
 } t_mlx;
 //	--- MAIN.C ---
