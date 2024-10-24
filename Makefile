@@ -15,7 +15,7 @@ LIBS	=	./mlx_42/build/libmlx42.a -ldl -lglfw -pthread -lm
 #--------------<SRC>----------------
 NAME	=	cub3d
 SRC		=	src/
-CFILES	=	main.c parsing.c game.c utils.c check.c paths.c assign_paths.c
+CFILES	=	main.c parsing.c game.c utils.c check.c paths.c assign_paths.c parse_map.c
 
 SRCC	=	$(addprefix $(SRC), $(CFILES))
 

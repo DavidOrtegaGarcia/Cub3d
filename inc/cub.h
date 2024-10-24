@@ -18,6 +18,12 @@ typedef struct s_vector
 	int	z;
 }	t_vector;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_color
 {
 	int	r;
@@ -33,6 +39,7 @@ typedef struct s_check
 	int			init_pos_found;
 	int			lines_to_map;
 	int			map_lines;
+	int			assigned_lines;
 	int			map_columns;
 	int			found_north;
 	int			found_south;
@@ -44,12 +51,13 @@ typedef struct s_check
 
 typedef struct s_map
 {
+	t_point		init_point;
 	t_check		check;
 	char		**content;
-	char		*north;
-	char		*south;
-	char		*east;
-	char		*west;
+	xpm_t		*north;
+	xpm_t		*south;
+	xpm_t		*east;
+	xpm_t		*west;
 	t_color		floor;
 	t_color		celling;
 }	t_map;
@@ -67,6 +75,10 @@ int		ft_get_rows(t_map *map, char *path);
 //	--- PARSE.C ---
 void	ft_parse(t_map *map);
 char	*clean_line(char *line);
+void show_map(t_map *map);
+
+//	--- PARSE_MAP.C ---
+void push_line(t_map *map, char *line);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);
@@ -85,5 +97,6 @@ void	assign_west(t_map *map, char *path);
 char	**free_matrix(char **matrix, int i);
 void	ft_error(const char *msg);
 void	free_all_doc(char ***all_doc);
+void		ft_check_element(char *line, char **splitted);
 
 #endif

@@ -6,13 +6,21 @@ void	get_paths(t_map *map)
 	char	*line;
 	char	**splitted;
 
+	//map->check.assigned_lines = 0;
 	fd = open(map->check.path, O_RDONLY);
+	// trimm hace malloc!!!
 	while (map->check.lines_to_map < map->check.map_lines)
 	{
-		line = get_next_line(fd);
-		splitted = ft_split(line, ' ');
-		if (is_element(splitted[0]))
-			assign(map, splitted[1], is_element(splitted[0]));
+		line = ft_strtrim(get_next_line(fd), " \n");
+		if (found_all(map))
+			push_line(map, ft_strtrim(line, " \n"));
+		else if (ft_strcmp(line, "") != 0)
+		{
+			splitted = ft_split(ft_strtrim(line, " \n"), ' ');
+			ft_check_element(line, splitted);
+			if (is_element(splitted[0]))
+				assign(map, splitted[1], is_element(splitted[0]));
+		}
 		map->check.lines_to_map++;
 		free(line);
 	}
@@ -54,4 +62,26 @@ int	found_all(t_map *map)
 	map->check.found_celling == 1)
 		return (1);
 	return (0);
+}
+
+void ft_check_element(char *line, char **splitted)
+{
+	//trim hace malloc!!!
+    int i;
+
+    i = 0;
+    if (!line || ft_strcmp(ft_strtrim(line, " \n"), "\0") == 0)
+        return;
+    line = ft_strtrim(line, " \n");
+    if(!line | !splitted | ft_strcmp(line, "\0") == 0)
+        return ;
+
+    line = ft_strtrim(line, " \n");
+
+    while (splitted[i])
+        i++;
+
+    if (i != 2)
+        ft_error(ft_strjoin(ft_strjoin("Path \"", line), "\" not valid"));
+    return ;
 }

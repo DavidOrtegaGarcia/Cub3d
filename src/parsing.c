@@ -3,13 +3,7 @@
 void	ft_parse(t_map *map)
 {
 	get_paths(map);
-	puts(map->north);
-	puts(map->south);
-	puts(map->west);
-	puts(map->east);
-	ft_printf("%d, %d, %d\n", map->celling.r, map->celling.g, map->celling.b);
-	ft_printf("%d, %d, %d\n", map->floor.r, map->floor.g, map->floor.b);
-	ft_printf("\nLines to map: %d", map->check.lines_to_map);
+	show_map(map);
 	// find line: 	busca una linea que quitando espacios si hay, empieze con el texto enviado
 	// get_path:	extraer path de la linea
 	// get_color:	extraer color de la linea
@@ -23,6 +17,21 @@ void	ft_parse(t_map *map)
 
 	// sumarle a map.check.map_lines para saber donde empezar a contar
 	//return (map);
+}
+
+void show_map(t_map *map)
+{
+    int i;
+
+    i = 0;
+    while (i < map->check.assigned_lines)
+    {
+        if (map->content[i])
+        {
+            puts(map->content[i]);
+        }
+        i++;
+    }
 }
 
 char	*clean_line(char *line)
