@@ -6,14 +6,15 @@ void	get_paths(t_map *map)
 	char	*line;
 	char	**splitted;
 
-	//map->check.assigned_lines = 0;
 	fd = open(map->check.path, O_RDONLY);
 	// trimm hace malloc!!!
 	while (map->check.lines_to_map < map->check.map_lines)
 	{
-		line = ft_strtrim(get_next_line(fd), " \n");
+		line = ft_strtrim(get_next_line(fd), "\n");
+		if(!found_all(map))
+			line = ft_strtrim(line, " \n");
 		if (found_all(map))
-			push_line(map, ft_strtrim(line, " \n"));
+			push_line(map, line);
 		else if (ft_strcmp(line, "") != 0)
 		{
 			splitted = ft_split(ft_strtrim(line, " \n"), ' ');
