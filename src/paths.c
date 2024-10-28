@@ -14,7 +14,7 @@ void	get_paths(t_map *map)
 		if(!found_all(map))
 			line = ft_strtrim(line, " \n");
 		if (found_all(map))
-			push_line(map, line);
+			push_line(map, line); // el mapa no debe aceptar lineas vacias entremedio
 		else if (ft_strcmp(line, "") != 0)
 		{
 			splitted = ft_split(ft_strtrim(line, " \n"), ' ');
@@ -35,11 +35,19 @@ t_color	get_color(char *color)
 {
 	t_color	rgb;
 	char	**hex;
+	int aux;
 
 	hex = ft_split(color, ',');
-	rgb.r = atoi(hex[0]);
-	rgb.g = atoi(hex[1]);
-	rgb.b = atoi(hex[2]);
+	if(!atoi(hex[0]) || !atoi(hex[1])  || !atoi(hex[2])\
+	 || atoi(hex[0]) < 0 || atoi(hex[1]) < 0 || atoi(hex[2]) < 0\
+	 || atoi(hex[0]) > 255 || atoi(hex[1]) > 255 || atoi(hex[2]) > 255)
+		ft_error("El color seleccionado no es valido");
+	else
+	{
+		rgb.r = atoi(hex[0]);
+		rgb.g = atoi(hex[1]);
+		rgb.b = atoi(hex[2]);
+	}
 	free(hex);
 	return (rgb);
 }
