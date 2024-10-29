@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <math.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
 # include "libft.h" 
@@ -15,8 +16,8 @@
 # define S_HEIGHT 1080 //Screen heigth
 # define BOX_SIZE 30 // Box size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.045 // rotation speed
-# define PLAYER_SPEED 4 // player speed
+# define ROTATION_SPD 0.045 // rotation speed
+# define PLAYER_SPD 4 // player speed
 
 //	---Structures---
 typedef struct s_point
@@ -51,6 +52,7 @@ typedef struct s_check
 
 typedef struct s_map
 {
+	t_point		init_point;
 	t_check		check;
 	char		**content;
 	char		*north;
@@ -64,38 +66,30 @@ typedef struct s_map
 
 typedef struct s_player //the player structure
 {
-	int  plyr_x; // player x position in pixels
-	int  plyr_y; // player y position in pixels	
+	int  p_x; // player x position in pixels
+	int  p_y; // player y position in pixels	
 	double angle; // player angle
-	float fov_rd; // field of view in radians
+	float fov_rad; // field of view in radians
 	int  rot; // rotation flag
-	int  l_r; // left right flag
-	int  u_d; // up down flag
+	int  lft_rhg_f; // left right flag
+	int  up_dwn_f; // up down flag
 }	t_player;
 
 typedef struct s_ray //the ray structure
 {
- double ray_ngl; // ray angle
+ double ray_angl; // ray angle
  double distance; // distance to the wall
  int  flag;  // flag for the wall
 }	t_ray;
 
-typedef struct s_data //the data structure
-{
-	int  p_x;  // player x position in the map
-	int  p_y;  // player y position in the map
-	int  w_map;  // map width
-	int  h_map;  // map height
-} t_data;
-
 typedef struct s_mlx //the mlx structure
 {
-	mlx_image_t	*img; // the image
 	mlx_t		*mlx; // the mlx pointer
-	//t_ray		tray; // the ray structure
-	t_map		tmap; // the data structure
-	//t_player	tply; // the player structure
-} t_mlx;
+	mlx_image_t	*img; // the image
+	t_map		tmap; 
+	t_player	*tplayer;
+	t_ray		*tray; 
+}	t_mlx;
 //	--- MAIN.C ---
 
 //	--- GAME.C ---

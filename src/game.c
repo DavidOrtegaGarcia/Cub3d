@@ -1,37 +1,48 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daortega <daortega@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 16:13:17 by daortega          #+#    #+#             */
-/*   Updated: 2024/10/23 16:08:19 by daortega         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "cub.h"
 //#define BPP sizeof(int32_t) //Bytes per pixel
 
-void resize_hook(int32_t width, int32_t height, void* param)
+void resize_hook(int32_t width, int32_t height, void *param)
 {
 	mlx_image_t *img = (mlx_image_t*)param;
 	mlx_resize_image(img, width, height);
 }
 
+void exec_game(void *param)
+{
+	t_mlx *tmlx;
+
+	tmlx = param; 
+	mlx_delete_image(tmlx->mlx, tmlx->img);
+	tmlx->img = mlx_new_image(tmlx->mlx, S_WIDTH, S_HEIGHT); // create new image
+	//hook(mlx, 0, 0); // hook the player
+	//cast_rays(mlx); // cast the rays
+	mlx_image_to_window(tmlx->mlx, tmlx->img, 0, 0);
+}
+
+void init_tplayer(t_mlx tmlx)
+{
+	tmlx.tplayer->p_x = tmlx.tmap.init_point.x * BOX_SIZE + BOX_SIZE / 2;
+	tmlx.tplayer->p_y = tmlx.tmap.init_point.y * BOX_SIZE + BOX_SIZE / 2;
+	tmlx.tplayer->fov_rad = (FOV * M_PI) / 180; 
+	tmlx.tplayer->angle = M_PI; 
+}
+
 void init_game(t_map tmap)
 {
-	(void)tmap;
 	t_mlx	tmlx;
-	uint32_t y;
-	uint32_t x;
-	y = 0;
 
+	tmlx.tmap = tmap;
+	tmlx.tplayer = calloc(1, sizeof(t_player)); 
+	tmlx.tray = calloc(1, sizeof(t_ray));
 	tmlx.mlx = mlx_init(S_WIDTH, S_HEIGHT, "Cub3d", true);
 	if (!tmlx.mlx)
 		exit(EXIT_FAILURE);
-	tmlx.img = mlx_new_image(tmlx.mlx, S_WIDTH, S_HEIGHT);
+	init_tplayer(tmlx);
+	//tmlx.img = mlx_new_image(tmlx.mlx, S_WIDTH, S_HEIGHT);
+	mlx_loop_hook(tmlx.mlx, &exec_game, &tmlx);
 	
+
 	//Insertar pixeles
 	/*mlx_image_to_window(tmlx.mlx, tmlx.img, 0, 0);
 	while (y < tmlx.img->height / 2)
