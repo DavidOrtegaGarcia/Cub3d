@@ -2,21 +2,9 @@
 
 void	ft_parse(t_map *map)
 {
+	map->check.map_found = 0;
 	get_paths(map);
 	show_map(map);
-	// find line: 	busca una linea que quitando espacios si hay, empieze con el texto enviado
-	// get_path:	extraer path de la linea
-	// get_color:	extraer color de la linea
-
-	//  map.check.check_map = find_map();
-    // enviarle a partir de que linea vamos a buscar el mapa
-	// map.content = fill_map();
-    // enviarle checkmap
-
-	//puede que se puedan juntar las dos funciones en una sola
-
-	// sumarle a map.check.map_lines para saber donde empezar a contar
-	//return (map);
 }
 
 void show_map(t_map *map)

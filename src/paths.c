@@ -14,7 +14,7 @@ void	get_paths(t_map *map)
 		if(!found_all(map))
 			line = ft_strtrim(line, " \n");
 		if (found_all(map))
-			push_line(map, line); // el mapa no debe aceptar lineas vacias entremedio
+			push_line(map, line);
 		else if (ft_strcmp(line, "") != 0)
 		{
 			splitted = ft_split(ft_strtrim(line, " \n"), ' ');
@@ -35,18 +35,21 @@ t_color	get_color(char *color)
 {
 	t_color	rgb;
 	char	**hex;
-	int aux;
+	int		i;
 
 	hex = ft_split(color, ',');
-	if(!atoi(hex[0]) || !atoi(hex[1])  || !atoi(hex[2])\
-	 || atoi(hex[0]) < 0 || atoi(hex[1]) < 0 || atoi(hex[2]) < 0\
-	 || atoi(hex[0]) > 255 || atoi(hex[1]) > 255 || atoi(hex[2]) > 255)
-		ft_error("El color seleccionado no es valido");
-	else
+	if (!hex || !hex[0] || !hex[1] || !hex[2])
+		ft_error("Formato de color no válido");
+	rgb.r = ft_atoi(hex[0]);
+	rgb.g = ft_atoi(hex[1]);
+	rgb.b = ft_atoi(hex[2]);
+	if ((rgb.r < 0 || rgb.r > 255) || (rgb.g < 0 || rgb.g > 255) || (rgb.b < 0 || rgb.b > 255))
+		ft_error("El color seleccionado no es válido");
+	i = 0;
+	while (hex[i] != NULL)
 	{
-		rgb.r = atoi(hex[0]);
-		rgb.g = atoi(hex[1]);
-		rgb.b = atoi(hex[2]);
+		free(hex[i]);
+		i++;
 	}
 	free(hex);
 	return (rgb);

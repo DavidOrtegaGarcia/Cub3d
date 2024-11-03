@@ -38,5 +38,6 @@ int main(int argc, char *argv[])
 	ft_check_input(&map, argc, argv[1]);
 	ft_get_doc(&map, argv[1], ft_get_rows(&map, map.check.path));
 	ft_parse(&map);
+	ft_check_map(&map);
 	free_all_doc(&map.check.all_doc);
 }

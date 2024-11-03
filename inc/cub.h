@@ -36,7 +36,7 @@ typedef struct s_check
 	char		*path;
 	char		**all_doc;
 	char		**check_map;
-	int			init_pos_found;
+	int			found_init_pos;
 	int			lines_to_map;
 	int			map_lines;
 	int			assigned_lines;
@@ -47,6 +47,7 @@ typedef struct s_check
 	int			found_east;
 	int			found_floor;
 	int			found_celling;
+	int			map_found;
 }	t_check;
 
 typedef struct s_map
@@ -79,6 +80,8 @@ void show_map(t_map *map);
 
 //	--- PARSE_MAP.C ---
 void push_line(t_map *map, char *line);
+void check_line(t_map *map, char *line);
+void ft_check_map(t_map *map);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);
