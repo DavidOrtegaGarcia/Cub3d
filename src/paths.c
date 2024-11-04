@@ -6,12 +6,12 @@ void	get_paths(t_map *map)
 	char	*line;
 	char	**splitted;
 
-	fd = open(map->check.path, O_RDONLY);
 	// trimm hace malloc!!!
+	fd = open(map->check.path, O_RDONLY);
 	while (map->check.lines_to_map < map->check.map_lines)
 	{
 		line = ft_strtrim(get_next_line(fd), "\n");
-		if(!found_all(map))
+		if (!found_all(map))
 			line = ft_strtrim(line, " \n");
 		if (found_all(map))
 			push_line(map, line);
@@ -43,7 +43,8 @@ t_color	get_color(char *color)
 	rgb.r = ft_atoi(hex[0]);
 	rgb.g = ft_atoi(hex[1]);
 	rgb.b = ft_atoi(hex[2]);
-	if ((rgb.r < 0 || rgb.r > 255) || (rgb.g < 0 || rgb.g > 255) || (rgb.b < 0 || rgb.b > 255))
+	if ((rgb.r < 0 || rgb.r > 255) || \
+	(rgb.g < 0 || rgb.g > 255) || (rgb.b < 0 || rgb.b > 255))
 		ft_error("El color seleccionado no es válido");
 	i = 0;
 	while (hex[i] != NULL)
@@ -76,24 +77,20 @@ int	found_all(t_map *map)
 	return (0);
 }
 
-void ft_check_element(char *line, char **splitted)
+void	ft_check_element(char *line, char **splitted)
 {
+	int	i;
 	//trim hace malloc!!!
-    int i;
-
-    i = 0;
-    if (!line || ft_strcmp(ft_strtrim(line, " \n"), "\0") == 0)
-        return;
-    line = ft_strtrim(line, " \n");
-    if(!line | !splitted | ft_strcmp(line, "\0") == 0)
-        return ;
-
-    line = ft_strtrim(line, " \n");
-
-    while (splitted[i])
-        i++;
-
-    if (i != 2)
-        ft_error(ft_strjoin(ft_strjoin("Path \"", line), "\" not valid"));
-    return ;
+	i = 0;
+	if (!line || ft_strcmp(ft_strtrim(line, " \n"), "\0") == 0)
+		return ;
+	line = ft_strtrim(line, " \n");
+	if (!line | !splitted | ft_strcmp(line, "\0") == 0)
+		return ;
+	line = ft_strtrim(line, " \n");
+	while (splitted[i])
+		i++;
+	if (i != 2)
+		ft_error(ft_strjoin(ft_strjoin("Path \"", line), "\" not valid"));
+	return ;
 }

@@ -35,7 +35,6 @@ typedef struct s_check
 {
 	char		*path;
 	char		**all_doc;
-	char		**check_map;
 	int			found_init_pos;
 	int			lines_to_map;
 	int			map_lines;
@@ -75,13 +74,13 @@ int		ft_get_rows(t_map *map, char *path);
 
 //	--- PARSE.C ---
 void	ft_parse(t_map *map);
-char	*clean_line(char *line);
-void show_map(t_map *map);
+void	show_map(t_map *map);
 
 //	--- PARSE_MAP.C ---
-void push_line(t_map *map, char *line);
-void check_line(t_map *map, char *line);
-void ft_check_map(t_map *map);
+void	push_line(t_map *map, char *line);
+void	check_line(t_map *map, char *line);
+void	ft_check_map(t_map *map);
+void	is_position_valid(t_map *map, int y, int x);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);

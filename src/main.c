@@ -1,7 +1,7 @@
 
 #include "cub.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
@@ -34,10 +34,8 @@ int main(int argc, char *argv[])
 	t_map map;
 
 	ft_memset(&map, 0, sizeof(t_map));
-	//map.check.assigned_lines = 0;
 	ft_check_input(&map, argc, argv[1]);
 	ft_get_doc(&map, argv[1], ft_get_rows(&map, map.check.path));
 	ft_parse(&map);
-	ft_check_map(&map);
 	free_all_doc(&map.check.all_doc);
 }

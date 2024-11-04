@@ -2,7 +2,6 @@
 
 void	assign(t_map *map, char *path, char *element)
 {
-	//puts(element);
 	if ((ft_strcmp(element, "NO") == 0))
 		assign_north(map, path);
 	else if ((ft_strcmp(element, "SO") == 0))
