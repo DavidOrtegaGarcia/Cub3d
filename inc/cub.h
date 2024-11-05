@@ -66,30 +66,30 @@ typedef struct s_map
 
 typedef struct s_player //the player structure
 {
-	int  p_x; // player x position in pixels
-	int  p_y; // player y position in pixels	
-	double angle; // player angle
-	float fov_rad; // field of view in radians
-	int  rot; // rotation flag
-	int  lft_rhg_f; // left right flag
-	int  up_dwn_f; // up down flag
+	t_point ply_p_px; // player position in px
+	double	view_dir; // player orientation
+	float	fov_rad; // field of view in radians
+	int		rot_f; // rotation flag
+	int		lft_rhg_f; // left right flag
+	int		up_dwn_f; // up down flag
 }	t_player;
 
 typedef struct s_ray //the ray structure
 {
- double ray_angl; // ray angle
- double distance; // distance to the wall
- int  flag;  // flag for the wall
+	double	ray_angl; // ray angle
+	double	wall_dist; // distance to the wall
+	int		wall_f;  // flag for the wall
 }	t_ray;
 
 typedef struct s_mlx //the mlx structure
 {
-	mlx_t		*mlx; // the mlx pointer
-	mlx_image_t	*img; // the image
+	mlx_t		*mlx;
+	mlx_image_t	*img;
 	t_map		tmap; 
-	t_player	*tplayer;
+	t_player	*tplyr;
 	t_ray		*tray; 
 }	t_mlx;
+
 //	--- MAIN.C ---
 
 //	--- GAME.C ---

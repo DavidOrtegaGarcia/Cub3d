@@ -8,6 +8,8 @@
 		"string": "c",
 		"vector": "c",
 		"system_error": "c",
-		"array": "c"
+		"array": "c",
+		"stat.h": "c",
+		"libft.h": "c"
 	}
 }
