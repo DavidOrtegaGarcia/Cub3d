@@ -18,15 +18,15 @@ void exec_game(void *param)
 	mlx_delete_image(tmlx->mlx, tmlx->img);
 	tmlx->img = mlx_new_image(tmlx->mlx, S_WIDTH, S_HEIGHT); // create new image
 	//hook(mlx, 0, 0); // hook the player
-	//cast_rays(mlx); // cast the rays
+	cast_rays(mlx); // cast the rays
 	mlx_image_to_window(tmlx->mlx, tmlx->img, 0, 0);
 }
 
 void init_tplayer(t_mlx tmlx)
 {
-	tmlx.tplyr->ply_p_px.x = tmlx.tmap.init_point.x * BOX_SIZE + BOX_SIZE / 2; //BOX_SIZE / 2 CENTRA EL JUGADOR EN MEDIO DE LA CASILLA 
-	tmlx.tplyr->ply_p_px.y = tmlx.tmap.init_point.y * BOX_SIZE + BOX_SIZE / 2;
-	tmlx.tplyr->fov_rad = (FOV * M_PI) / 180;
+	tmlx.tplyr->pos_px.x = tmlx.tmap.init_point.x * BOX_SIZE + BOX_SIZE / 2; //BOX_SIZE / 2 CENTRA EL JUGADOR EN MEDIO DE LA CASILLA 
+	tmlx.tplyr->pos_px.y = tmlx.tmap.init_point.y * BOX_SIZE + BOX_SIZE / 2;
+	tmlx.tplyr->fov_rad = (FOV * M_PI) / 180; //Convert fov to radius
 	tmlx.tplyr->view_dir = M_PI / 2; // Orientaton of the player
 }
 

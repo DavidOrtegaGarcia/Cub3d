@@ -66,7 +66,7 @@ typedef struct s_map
 
 typedef struct s_player //the player structure
 {
-	t_point ply_p_px; // player position in px
+	t_point pos_px; // player position in px
 	double	view_dir; // player orientation
 	float	fov_rad; // field of view in radians
 	int		rot_f; // rotation flag
@@ -78,7 +78,7 @@ typedef struct s_ray //the ray structure
 {
 	double	ray_angl; // ray angle
 	double	wall_dist; // distance to the wall
-	int		wall_f;  // flag for the wall
+	int		wall_f;  // flag to know if the wall is horizontal or vertical
 }	t_ray;
 
 typedef struct s_mlx //the mlx structure
