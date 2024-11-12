@@ -20,6 +20,12 @@
 # define PLAYER_SPD 4 // player speed
 
 //	---Structures---
+typedef struct s_dpoint
+{
+	double x;
+	double y;
+}	t_dpoint;
+
 typedef struct s_point
 {
 	int x;
