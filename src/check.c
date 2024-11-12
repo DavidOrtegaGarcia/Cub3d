@@ -18,12 +18,12 @@ void    ft_check_input(t_map *map, int argc, char *argv)
 
     if (len < 4)
     {
-        map->check.format_error = 1;
+        //map->check.format_error = 1;
         ft_error("File format error");
     } 
     else if (ft_strcmp(str + len - 4, ".cub") != 0)
     {
-        map->check.format_error = 1;
+        //map->check.format_error = 1;
         ft_error("File format error");
     }
 }

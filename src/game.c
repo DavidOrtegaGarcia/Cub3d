@@ -20,7 +20,7 @@ void exec_game(void *param)
 	//hook(mlx, 0, 0); // hook the player
 	cast_rays(tmlx); // cast the rays
 	mlx_image_to_window(tmlx->mlx, tmlx->img, 0, 0);
-}}
+}
 
 void init_tplayer(t_mlx tmlx)
 {

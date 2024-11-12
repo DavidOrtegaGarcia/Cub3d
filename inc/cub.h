@@ -22,8 +22,8 @@
 //	---Structures---
 typedef struct s_dpoint
 {
-	double x;
-	double y;
+	double x; // axis x
+	double y; // axis y
 }	t_dpoint;
 
 typedef struct s_point
@@ -98,8 +98,7 @@ typedef struct s_mlx //the mlx structure
 
 //	--- MAIN.C ---
 
-//	--- GAME.C ---
-void	init_game(t_map tmap);
+
 
 //	--- CHECK.C ---
 void	ft_check_input(t_map *map, int argc, char *argv);
@@ -113,6 +112,8 @@ void	ft_error(const char *msg);
 
 //	--- GAME.C ---
 void init_game(t_map tmap);
+void cast_rays(t_mlx *tmlx);
+void render_(t_mlx *tmlx);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);

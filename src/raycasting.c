@@ -1,55 +1,58 @@
 #include "cub.h"
 
-int wall_hit(t_mlx *tmlx, double x, double y,)
+int wall_hit(t_mlx *tmlx, double x, double y)
 {
 	t_point map_pos;
 
 	map_pos.x = floor(x / BOX_SIZE); // get the x position in the map
 	map_pos.y = floor(y / BOX_SIZE); // get the y position in the map
 
-	if (tmlx->tmap.content[map_pos.y] && map_pos.x <= ft_strlen(tmlx->dt->map2d[map_pos.y])) //Preguntar a edgar sobre como se llenan los vacios en el mapa
+	//if (tmlx->tmap.content[map_pos.y] != 0 && map_pos.x <= (int)ft_strlen(tmlx->tmap.content[map_pos.y])) 
 		if (tmlx->tmap.content[map_pos.y][map_pos.x] == '1') 
-			return (0);  
-	return (1);
+			return (1);  
+	return (0);
 }
 
-int unit_circle(double angle, char c) // check the unit circle
+int unit_circle(double ray_angl, char axis) // check the unit circle
 {
-	if (c == 'x')
+	if (axis == 'x')
 	{
-		if (angle > 0 && angle < M_PI)
+		if (ray_angl > 0 && ray_angl < M_PI)
 		return (1);
 	}
-	else if (c == 'y')
+	else if (axis == 'y')
 	{
-		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+		if (ray_angl > (M_PI / 2) && ray_angl < (3 * M_PI) / 2)
 		return (1);
 	}
 	return (0);
 }
 
-// Detrminate the direction of the ray andadjust inter and step variables consquently
-int check_inter(double angle, double *inter, double *step, double is_horizon)
+// Detrminate the direction of the ray and adjust inter and step variables consquently
+int check_inter(double ray_angl, double *inter, double *step, int is_horizon)
 {
 	if (is_horizon == 1)
 	{
-		if (angle > 0 && angle < M_PI) // Check if the ray aims down 
+		if (ray_angl > 0 && ray_angl < M_PI) // Check if the ray aims down 
 		{
-			*inter += BOX_SIZE;
-			return (-1); // Ray facing down
+			*inter += BOX_SIZE;  // NOTE: The coordinate system used in 2D graphics works the opposite of the Cartesian system 
+								// on the y axis, therefore to go down we increment y axis instead of decrement it
+
+
+			return (-1); // Ray facing down 
 		}
-		*step *= -1;
+		*step *= -1; // We will decrement y axis insteat of increment it to go rigth
 	}
 	else
 	{
-		if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) // Check if the ray aims right 
+		if (!(ray_angl > M_PI / 2 && ray_angl < 3 * M_PI / 2)) // Check if the ray aims right 
 		{
 			*inter += BOX_SIZE;
 			return (-1); // Ray facing right
 		}
-		*step *= -1;
+		*step *= -1; // We will decrement x axis insteat of increment it to go left
 	}
-	return (1); // Ray facing up or left
+	return (1); // Ray aims up or left
 }
 
 double get_dist_ver_w(t_mlx *tmlx, double ray_angl) // get the vertical intersection
@@ -64,8 +67,8 @@ double get_dist_ver_w(t_mlx *tmlx, double ray_angl) // get the vertical intersec
 	y_step = BOX_SIZE * tan(ray_angl);
 	v_inter.x = floor(tmlx->tplyr->pos_px.x / BOX_SIZE) * BOX_SIZE;
 	v_inter.y = tmlx->tplyr->pos_px.y + (v_inter.x - tmlx->tplyr->pos_px.x) * tan(ray_angl);
-	x_ray_dir; = check_inter(ray_angl, &v_inter.x, &x_step, 0); 
-	if ((unit_circle(ray_angl, 'x') && y_step < 0) || (!unit_circle(ray_angl, 'x') && y_step > 0)) 
+	x_ray_dir = check_inter(ray_angl, &v_inter.x, &x_step, 0); 
+	if ((unit_circle(ray_angl, 'x') && y_step < 0) || (!unit_circle(ray_angl, 'x') && y_step > 0)) // We adjusts the direction by determining to move up or down.
 		y_step *= -1;
 	while (wall_hit(tmlx, v_inter.x - x_ray_dir, v_inter.y) == 0)
 	{
@@ -88,9 +91,9 @@ double get_dist_hor_w(t_mlx *tmlx, double ray_angl)
 	h_inter.y = floor(tmlx->tplyr->pos_px.y / BOX_SIZE) * BOX_SIZE; // We use floor to make sure the point is in the border of the box (round down the number)
 	h_inter.x = tmlx->tplyr->pos_px.x + (h_inter.y - tmlx->tplyr->pos_px.y) / tan(ray_angl);
 	y_ray_dir = check_inter(ray_angl, &h_inter.y, &y_step, 1);
-	if ((unit_circle(ray_angl, 'y') && x_step > 0) || (!unit_circle(ray_angl, 'y') && x_step < 0)) 
+	if ((unit_circle(ray_angl, 'y') && x_step > 0) || (!unit_circle(ray_angl, 'y') && x_step < 0)) // We adjusts the direction by determining to move left or right.
 		x_step *= -1;
-	while (wall_hit(tmlx, h_inter.x, h_inter.y - y_ray_dir) == 0) 
+	while (!wall_hit(tmlx, h_inter.x, h_inter.y - y_ray_dir)) 
 	{
 		h_inter.x += x_step;
 		h_inter.y += y_step;
@@ -110,8 +113,8 @@ void cast_rays(t_mlx *tmlx)
 	while (ray < tmlx->mlx->width)
 	{
 		tmlx->tray->wall_f = 0; // flag to know if the wall is horizontal or vertical
-		dist_hor_w = get_dist_hor_w(tmlx, nor_angle(tmlx->tray->ray_angl)); // get the distance to the closest horizontal wall 
-		dist_ver_w = get_dist_ver_w(tmlx, nor_angle(tmlx->tray->ray_angl)); // get the distance to the closest vertical wall
+		dist_hor_w = get_dist_hor_w(tmlx, /*nor_angle(*/tmlx->tray->ray_angl)/*)*/; // get the distance to the closest horizontal wall 
+		dist_ver_w = get_dist_ver_w(tmlx, /*nor_angle(*/tmlx->tray->ray_angl)/*)*/; // get the distance to the closest vertical wall
 		if (dist_ver_w <= dist_hor_w) // get the distance to the closest wall
 			tmlx->tray->wall_dist = dist_ver_w;
 		else
@@ -119,10 +122,10 @@ void cast_rays(t_mlx *tmlx)
 			tmlx->tray->wall_dist = dist_hor_w;
 			tmlx->tray->wall_f = 1; 
 		}
-		render_wall(tmlx, ray);
+		render(tmlx);
 		ray++;
 		tmlx->tray->ray_angl += (tmlx->tplyr->fov_rad / tmlx->mlx->width); // We get the next projection angle to render (this value is got in realtion of our position in the map)
-										   // Actual angle + Field of view / Width of the resolution
+										   								   // Actual angle + Field of view / Width of the resolution
 		
 	}
 }
