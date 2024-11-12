@@ -18,9 +18,9 @@ void exec_game(void *param)
 	mlx_delete_image(tmlx->mlx, tmlx->img);
 	tmlx->img = mlx_new_image(tmlx->mlx, S_WIDTH, S_HEIGHT); // create new image
 	//hook(mlx, 0, 0); // hook the player
-	cast_rays(mlx); // cast the rays
+	cast_rays(tmlx); // cast the rays
 	mlx_image_to_window(tmlx->mlx, tmlx->img, 0, 0);
-}
+}}
 
 void init_tplayer(t_mlx tmlx)
 {
