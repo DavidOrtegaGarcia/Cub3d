@@ -47,7 +47,6 @@ void	push_line(t_map *map, char *line)
 {
 	char	**new_content;
 	int		i;
-
 	if (map->check.map_found == 0 && \
 	(!line || ft_strcmp(ft_strtrim(line, " \n"), "") == 0))
 		return ;
@@ -87,8 +86,8 @@ void	check_line(t_map *map, char *line)
 			if (map->check.found_init_pos)
 				ft_error("Solo puede haber una posición inicial en el mapa");
 			map->init_point.x = map->check.assigned_lines;
-			/* deberiamos de aclarar bien que es x y que es y*/
 			map->init_point.y = i;
+			map->orientation = line[i];
 			map->check.found_init_pos = 1;
 		}
 		i++;

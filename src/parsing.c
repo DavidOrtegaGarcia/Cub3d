@@ -5,6 +5,7 @@ void	ft_parse(t_map *map)
 	get_paths(map);
 	ft_check_map(map);
 	show_map(map);
+	ft_printf("%c", map->orientation);
 }
 
 void	show_map(t_map *map)

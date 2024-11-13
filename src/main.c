@@ -31,7 +31,7 @@ int	main(int argc, char *argv[])
 	//init_game(tmap);
 
 
-	t_map map;
+	t_map	map;
 
 	ft_memset(&map, 0, sizeof(t_map));
 	ft_check_input(&map, argc, argv[1]);

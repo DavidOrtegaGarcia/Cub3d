@@ -54,6 +54,7 @@ typedef struct s_map
 	t_point		init_point;
 	t_check		check;
 	char		**content;
+	char		orientation;
 	xpm_t		*north;
 	xpm_t		*south;
 	xpm_t		*east;
@@ -75,6 +76,8 @@ int		ft_get_rows(t_map *map, char *path);
 //	--- PARSE.C ---
 void	ft_parse(t_map *map);
 void	show_map(t_map *map);
+
+void	manage_line(t_map *map, char *line);
 
 //	--- PARSE_MAP.C ---
 void	push_line(t_map *map, char *line);
