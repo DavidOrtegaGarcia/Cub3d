@@ -43,22 +43,6 @@ void init_game(t_map tmap)
 	init_tplayer(tmlx);
 	//tmlx.img = mlx_new_image(tmlx.mlx, S_WIDTH, S_HEIGHT);
 	mlx_loop_hook(tmlx.mlx, &exec_game, &tmlx);
-	
-
-	//Insertar pixeles
-	/*mlx_image_to_window(tmlx.mlx, tmlx.img, 0, 0);
-	while (y < tmlx.img->height / 2)
-	{
-		x = 0;
-		while (x < tmlx.img->width / 2)
-		{
-			my_put_pixel(tmlx.img, x, y,  get_rgba(tmap.celling.r, 
-			tmap.celling.g, tmap.celling.b, 255));
-			x++;
-		}
-		y++;
-	}*/
-	//mlx_loop_hook(mlx, &hook, mlx);
 	mlx_resize_hook(tmlx.mlx, &resize_hook, tmlx.img);
 	mlx_loop(tmlx.mlx);
 	mlx_terminate(tmlx.mlx);
