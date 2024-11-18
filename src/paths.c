@@ -14,8 +14,8 @@ void	get_paths(t_map *map)
 		free(aux);
 		manage_line(map, line);
 		map->check.lines_to_map++;
-		if (line)
-			free(line);
+		//if (line)
+		//	free(line);
 	}
 	if (found_all(map) == 0)
 		ft_error("Faltan algunos elementos");
@@ -80,5 +80,5 @@ void	ft_check_element(char *line, char **splitted)
 		i++;
 	if (i != 2)
 		ft_error("At least one path is not valid");
-	return ;
+	free(aux);
 }

@@ -27,5 +27,6 @@ char	**free_matrix(char **matrix, int i)
 	while (--i > -1)
 		free(matrix[i]);
 	free(matrix);
+	matrix = NULL;
 	return (NULL);
 }

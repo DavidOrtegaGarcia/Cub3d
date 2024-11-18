@@ -6,8 +6,8 @@ YELLOW	=	\033[38;5;190m
 
 #-------------<COMMANDS>------------
 CC 		= 	cc
-CFLAGS 	= 	-Wall -Wextra -Werror 
-#-fsanitize=address
+CFLAGS 	= 	-Wall -Wextra -Werror -fsanitize=address
+#
 # Includes and libraries
 INCLUDE	=	-I./inc -I./libft -I./mlx_42/include
 LIBS	=	./mlx_42/build/libmlx42.a -ldl -lglfw -pthread -lm

@@ -63,8 +63,11 @@ void	push_line(t_map *map, char *line)
 	}
 	new_content[i] = ft_strdup(line);
 	map->check.map_found = 1;
-	free(map->content);
+	//free(map->content);
+	if(map->content)
+		free_matrix(map->content, map->check.assigned_lines);
 	map->content = new_content;
+	free_matrix(new_content, i);
 	map->check.assigned_lines++;
 }
 
@@ -72,10 +75,12 @@ void	check_line(t_map *map, char *line)
 {
 	int		i;
 	char	*valid_chars;
+	char 	*aux;
 
 	valid_chars = "01NSWE ";
 	i = 0;
-	if (!line || ft_strcmp(ft_strtrim(line, " \n"), "") == 0)
+	aux = ft_strtrim(line, " \n");
+	if (!line || ft_strcmp(aux, "") == 0)
 		ft_error("Una línea no puede estar vacía o solo contener espacios");
 	while (line[i] != '\0')
 	{
@@ -92,4 +97,5 @@ void	check_line(t_map *map, char *line)
 		}
 		i++;
 	}
+	free(aux);
 }
