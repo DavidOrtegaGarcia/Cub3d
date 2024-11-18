@@ -32,6 +32,12 @@ typedef struct s_point
 	int y;
 }	t_point;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_color
 {
 	int	r;
@@ -43,10 +49,10 @@ typedef struct s_check
 {
 	char		*path;
 	char		**all_doc;
-	char		**check_map;
-	int			init_pos_found;
+	int			found_init_pos;
 	int			lines_to_map;
 	int			map_lines;
+	int			assigned_lines;
 	int			map_columns;
 	int			found_north;
 	int			found_south;
@@ -54,6 +60,7 @@ typedef struct s_check
 	int			found_east;
 	int			found_floor;
 	int			found_celling;
+	int			map_found;
 }	t_check;
 
 typedef struct s_map
@@ -111,6 +118,17 @@ int		ft_get_rows(t_map *map, char *path);
 
 //	--- PARSE.C ---
 void	ft_parse(t_map *map);
+
+void	show_map(t_map *map);
+
+void	manage_line(t_map *map, char *line);
+
+//	--- PARSE_MAP.C ---
+void	push_line(t_map *map, char *line);
+void	check_line(t_map *map, char *line);
+void	ft_check_map(t_map *map);
+void	is_position_valid(t_map *map, int y, int x);
+
 char	*clean_line(char *line);
 void	ft_error(const char *msg);
 
@@ -141,5 +159,6 @@ void	assign_west(t_map *map, char *path);
 char	**free_matrix(char **matrix, int i);
 void	ft_error(const char *msg);
 void	free_all_doc(char ***all_doc);
+void		ft_check_element(char *line, char **splitted);
 
 #endif
