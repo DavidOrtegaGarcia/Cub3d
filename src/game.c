@@ -13,7 +13,10 @@ void exec_game(void *param)
 	t_mlx *tmlx;
 	t_dpoint mov;
 
+
 	tmlx = param; 
+	mov.x = 0;
+	mov.y = 0;
 	mlx_delete_image(tmlx->mlx, tmlx->img);
 	tmlx->img = mlx_new_image(tmlx->mlx, S_WIDTH, S_HEIGHT); // create new image
 	movment_hook(tmlx, mov); // hook the player
@@ -23,7 +26,6 @@ void exec_game(void *param)
 
 double get_viwew_dir(t_mlx tmlx)
 {
-
 	if (tmlx.tmap.orientation == 'N')
 		return (3 * M_PI / 2);
 	if (tmlx.tmap.orientation == 'S')
@@ -32,7 +34,7 @@ double get_viwew_dir(t_mlx tmlx)
 		return (M_PI);
 	if (tmlx.tmap.orientation == 'E')
 		return (0);
-
+	return (0);
 }
 
 void init_tplayer(t_mlx tmlx)
@@ -48,13 +50,13 @@ void init_game(t_map tmap)
 	t_mlx	tmlx;
 
 	tmlx.tmap = tmap;
-	tmlx.tplyr = ft_calloc(-1, sizeof(t_player)); 
-	tmlx.tray = ft_calloc(-1, sizeof(t_ray));
+	tmlx.tplyr = ft_calloc(0, sizeof(t_player));
+	tmlx.tray = ft_calloc(0, sizeof(t_ray));
 	tmlx.mlx = mlx_init(S_WIDTH, S_HEIGHT, "Cub3d", true);
 	if (!tmlx.mlx)
 		exit(EXIT_FAILURE);
 	init_tplayer(tmlx);
-	tmlx.img = mlx_new_image(&tmlx.mlx, S_WIDTH, S_HEIGHT);
+	tmlx.img = mlx_new_image(tmlx.mlx, S_WIDTH, S_HEIGHT);
 	mlx_key_hook(tmlx.mlx, &key_hook, &tmlx);
 	mlx_loop_hook(tmlx.mlx, &exec_game, &tmlx);
 	mlx_resize_hook(tmlx.mlx, &resize_hook, tmlx.img);

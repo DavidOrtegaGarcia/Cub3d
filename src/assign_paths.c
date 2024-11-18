@@ -47,7 +47,7 @@ void	assign_north(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"NO\"");
 	}
-	map->north = path;
+	//map->north = path;
 	map->check.found_north = 1;
 	close(fd);
 }
@@ -73,7 +73,7 @@ void	assign_south(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"SO\"");
 	}
-	map->south = path;
+	//map->south = path;
 	map->check.found_south = 1;
 	close(fd);
 }
@@ -99,7 +99,7 @@ void	assign_east(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"EA\"");
 	}
-	map->east = path;
+	//map->east = path;
 	map->check.found_east = 1;
 	close(fd);
 }
@@ -125,7 +125,7 @@ void	assign_west(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"WE\"");
 	}
-	map->west = path;
+	//map->west = path;
 	map->check.found_west = 1;
 	close(fd);
 }

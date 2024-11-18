@@ -3,10 +3,10 @@
 void	ft_parse(t_map *map)
 {
 	get_paths(map);
-	puts(map->north);
-	puts(map->south);
-	puts(map->west);
-	puts(map->east);
+	//puts(map->north);
+	//puts(map->south);
+	//puts(map->west);
+	//puts(map->east);
 	ft_printf("%d, %d, %d\n", map->celling.r, map->celling.g, map->celling.b);
 	ft_printf("%d, %d, %d\n", map->floor.r, map->floor.g, map->floor.b);
 	ft_printf("\nLines to map: %d", map->check.lines_to_map);

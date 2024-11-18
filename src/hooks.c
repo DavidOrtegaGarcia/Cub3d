@@ -21,7 +21,7 @@ void	move(t_mlx *tmlx, t_dpoint mov)
 	}
 }
 
-void	rotate(t_mlx *mlx, int dir)
+void	rotate(t_mlx *tmlx, int dir)
 {
 	if (dir == 1) // TURN RIGTH
 	{
@@ -39,9 +39,9 @@ void	rotate(t_mlx *mlx, int dir)
 
 void	movment_hook(t_mlx *tmlx, t_dpoint mov)
 {
-	if (tmlx->tray->rot == 1)
+	if (tmlx->tplyr->rot_f == 1)
 		rotate(tmlx, 1);
-	if (tmlx->tplyr->rot == -1)
+	if (tmlx->tplyr->rot_f == -1)
 		rotate(tmlx, -1);
 	if (tmlx->tplyr->up_dwn_f == 1) // MOVE UP
 	{
@@ -63,20 +63,20 @@ void	movment_hook(t_mlx *tmlx, t_dpoint mov)
 		mov.x = sin(tmlx->tplyr->view_dir) * PLAYER_SPD;
 		mov.y = -cos(tmlx->tplyr->view_dir) * PLAYER_SPD;
 	}
-	move(tmlx, player);
+	move(tmlx, mov);
 }
 
 void	release_key(mlx_key_data_t data_key, t_mlx *tmlx)
 {
-	if (data_key.key == MLX_KEY_W && (data_key.action == MLX_RELEASE) ||
-		data_key.key == MLX_KEY_S && (data_key.action == MLX_RELEASE))
-		mlx->ply->u_d = 0;
+	if ((data_key.key == MLX_KEY_W && data_key.action == MLX_RELEASE) ||
+		(data_key.key == MLX_KEY_S && data_key.action == MLX_RELEASE))
+		tmlx->tplyr->up_dwn_f = 0;
 	else if ((data_key.key == MLX_KEY_A && data_key.action == MLX_RELEASE) ||
 		(data_key.key == MLX_KEY_D && data_key.action == MLX_RELEASE))
-		mlx->ply->l_r = 0;
+		tmlx->tplyr->lft_rhg_f = 0;
 	else if ((data_key.key == MLX_KEY_LEFT && data_key.action == MLX_RELEASE) ||
-		(data_key.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE))
-		mlx->ply->rot = 0;
+		(data_key.key == MLX_KEY_RIGHT && data_key.action == MLX_RELEASE))
+		tmlx->tplyr->rot_f = 0;
 }
 
 void	key_hook(mlx_key_data_t data_key, void *param)
@@ -95,8 +95,8 @@ void	key_hook(mlx_key_data_t data_key, void *param)
 	else if (data_key.key == MLX_KEY_D && data_key.action == MLX_PRESS)
 		tmlx->tplyr->lft_rhg_f = 1;
 	else if (data_key.key == MLX_KEY_LEFT && data_key.action == MLX_PRESS)
-		tmlx->tplyr->lft_rhg_frot_f = -1;
+		tmlx->tplyr->rot_f = -1;
 	else if (data_key.key == MLX_KEY_RIGHT && data_key.action == MLX_PRESS)
-	tmlx->tplyr->lft_rhg_frot_f = 1;
+	tmlx->tplyr->rot_f = 1;
 	release_key(data_key, tmlx);
 }

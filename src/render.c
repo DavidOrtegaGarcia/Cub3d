@@ -16,16 +16,16 @@ void print_flr_cling(t_mlx *tmlx, int ray, int top_wpixel, int bot_wpixel)
 	int	color;
 
 	i = 0;
-	color = get_rgba(tmap.celling.r, tmap.celling.g, tmap.celling.b, 255);
+	color = get_rgba(tmlx->tmap.celling.r, tmlx->tmap.celling.g, tmlx->tmap.celling.b, 255);
 	while (i < top_wpixel) // Print celling
 	{
-		my_put_pixel(&tmlx->img, ray, i, color);
+		my_put_pixel(tmlx->img, ray, i, color);
 		i++;
 	}
-	color = get_rgba(tmap.floor.r, tmap.floor.g, tmap.floor.b, 255);
+	color = get_rgba(tmlx->tmap.floor.r, tmlx->tmap.floor.g, tmlx->tmap.floor.b, 255);
 	while (bot_wpixel < tmlx->mlx->height) // Print floor
 	{
-		my_put_pixel(&tmlx->img, ray, i, color);
+		my_put_pixel(tmlx->img, ray, i, color);
 		bot_wpixel++;
 	}
 }
@@ -47,30 +47,30 @@ double	get_texture_x(mlx_texture_t	*texture, t_mlx *tmlx)
 	double	texture_x;
 
 	if (tmlx->tray->wall_f == 0) // The wall is vertical
-		texture_x = (int)fmodf((tmlx->tray->vert_y *
+		texture_x = (int)fmodf((tmlx->tray->vertical.y *
 		(texture->width / BOX_SIZE)), texture->width);  // Sacamos el residuo de un doble con fmodf
 	else // The wall is vertical
-		texture_x = (int)fmodf((tmlx->tray->horiz_x *
+		texture_x = (int)fmodf((tmlx->tray->vertical.x *
 		(texture->width / BOX_SIZE)), texture->width);
 	return (texture_x);
 }
 
 mlx_texture_t	*get_texture(t_mlx *tmlx)
 {
-	tmlx->tray->ray_angl = nor_angle(tmlx->tray->ray_angl);
+	tmlx->tray->ray_angl = nor_angl(tmlx->tray->ray_angl);
 	if (tmlx->tray->wall_f == 0) // The wall is vertical
 	{
 		if (tmlx->tray->ray_angl > M_PI / 2 && tmlx->tray->ray_angl < 3 * (M_PI / 2))
-			return (tmlx->tmap.east->texture);
+			return (&tmlx->tmap.east->texture);
 		else
-			return (tmlx->tmap.west->texture);
+			return (&tmlx->tmap.west->texture);
 	}
 	else // The wall is horizontal
 	{
 		if (tmlx->tray->ray_angl > 0 && tmlx->tray->ray_angl < M_PI)
-			return (tmlx->tmap.south->texture);
+			return (&tmlx->tmap.south->texture);
 		else
-			return (tmlx->tmap.north->texture);
+			return (&tmlx->tmap.north->texture);
 	}
 }
 
@@ -91,7 +91,7 @@ void print_wall(t_mlx *tmlx, double wall_height, int top_wpixel, int bot_wpixel)
 		texture_point.y = 0;
 	while (top_wpixel < bot_wpixel)
 	{
-		my_put_pixel(&tmlx->img, tmlx->tray->ray_num, top_wpixel, reverse_bytes(
+		my_put_pixel(tmlx->img, tmlx->tray->ray_num, top_wpixel, reverse_bytes(
 			texture_pixels[(int)texture_point.y * texture->width + (int)texture_point.x]));
 		texture_point.y += scaling_factor;
 		top_wpixel++;
@@ -104,7 +104,7 @@ void render(t_mlx *tmlx, int ray)
 	double top_wpixel;
 	double bot_wpixel;
 
-	tmlx->tray->wall_dist *= cos(nor_angle(tmlx->tray->ray_angl - tmlx->tplyr.view_dir)); // fix the fisheye effect
+	tmlx->tray->wall_dist *= cos(nor_angl(tmlx->tray->ray_angl - tmlx->tplyr->view_dir)); // fix the fisheye effect
 	wall_height = (BOX_SIZE / tmlx->tray->wall_dist) * 
 		((tmlx->mlx->width / 2) / tan(tmlx->tplyr->fov_rad / 2)); // get the wall height based on the distance of the wall
 	top_wpixel = (tmlx->mlx->height / 2) - (wall_height / 2);

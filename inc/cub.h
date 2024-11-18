@@ -61,10 +61,11 @@ typedef struct s_map
 	t_point		init_point;
 	t_check		check;
 	char		**content;
-	char		*north;
-	char		*south;
-	char		*east;
-	char		*west;
+	char		orientation;
+	xpm_t		*north;
+	xpm_t		*south;
+	xpm_t		*east;
+	xpm_t		*west;
 	t_color		floor;
 	t_color		celling;
 	t_point		p_plyr;
@@ -85,6 +86,9 @@ typedef struct s_ray //the ray structure
 	double	ray_angl; // ray angle
 	double	wall_dist; // distance to the wall
 	int		wall_f;  // flag to know if the wall is horizontal or vertical
+	int 	ray_num;
+	t_dpoint vertical;
+	t_dpoint horizontal;
 }	t_ray;
 
 typedef struct s_mlx //the mlx structure
@@ -113,7 +117,12 @@ void	ft_error(const char *msg);
 //	--- GAME.C ---
 void init_game(t_map tmap);
 void cast_rays(t_mlx *tmlx);
-void render_(t_mlx *tmlx);
+void render(t_mlx *tmlx, int ray);
+void	key_hook(mlx_key_data_t data_key, void *param);
+void	movment_hook(t_mlx *tmlx, t_dpoint mov);
+double nor_angl(double ray_angl);
+int		my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
+int 	get_rgba(int r, int g, int b, int a);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);
