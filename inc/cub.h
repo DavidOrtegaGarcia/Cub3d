@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <math.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
 # include "libft.h" 
@@ -15,16 +16,21 @@
 # define S_HEIGHT 1080 //Screen heigth
 # define BOX_SIZE 30 // Box size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.045 // rotation speed
-# define PLAYER_SPEED 4 // player speed
+# define ROTATION_SPD 0.045 // rotation speed
+# define PLAYER_SPD 4 // player speed
 
 //	---Structures---
-/*typedef struct s_vector
+typedef struct s_dpoint
+{
+	double x; // axis x
+	double y; // axis y
+}	t_dpoint;
+
+typedef struct s_point
 {
 	int x;
 	int y;
-	int z;
-}	t_vector;*/
+}	t_point;
 
 typedef struct s_point
 {
@@ -69,46 +75,41 @@ typedef struct s_map
 	xpm_t		*west;
 	t_color		floor;
 	t_color		celling;
+	t_point		p_plyr;
 }	t_map;
 
 typedef struct s_player //the player structure
 {
-	int  plyr_x; // player x position in pixels
-	int  plyr_y; // player y position in pixels	
-	double angle; // player angle
-	float fov_rd; // field of view in radians
-	int  rot; // rotation flag
-	int  l_r; // left right flag
-	int  u_d; // up down flag
+	t_point pos_px; // player position in px
+	double	view_dir; // player orientation
+	float	fov_rad; // field of view in radians
+	int		rot_f; // rotation flag
+	int		lft_rhg_f; // left right flag
+	int		up_dwn_f; // up down flag
 }	t_player;
 
 typedef struct s_ray //the ray structure
 {
- double ray_ngl; // ray angle
- double distance; // distance to the wall
- int  flag;  // flag for the wall
+	double	ray_angl; // ray angle
+	double	wall_dist; // distance to the wall
+	int		wall_f;  // flag to know if the wall is horizontal or vertical
+	int 	ray_num;
+	t_dpoint vertical;
+	t_dpoint horizontal;
 }	t_ray;
-
-typedef struct s_data //the data structure
-{
-	int  p_x;  // player x position in the map
-	int  p_y;  // player y position in the map
-	int  w_map;  // map width
-	int  h_map;  // map height
-} t_data;
 
 typedef struct s_mlx //the mlx structure
 {
-	mlx_image_t	*img; // the image
-	mlx_t		*mlx; // the mlx pointer
-	//t_ray		tray; // the ray structure
-	t_data		tdata; // the data structure
-	//t_player	tply; // the player structure
-} t_mlx;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	t_map		tmap; 
+	t_player	*tplyr;
+	t_ray		*tray; 
+}	t_mlx;
+
 //	--- MAIN.C ---
 
-//	--- GAME.C ---
-void	init_game(t_map tmap);
+
 
 //	--- CHECK.C ---
 void	ft_check_input(t_map *map, int argc, char *argv);
@@ -133,6 +134,13 @@ void	ft_error(const char *msg);
 
 //	--- GAME.C ---
 void init_game(t_map tmap);
+void cast_rays(t_mlx *tmlx);
+void render(t_mlx *tmlx, int ray);
+void	key_hook(mlx_key_data_t data_key, void *param);
+void	movment_hook(t_mlx *tmlx, t_dpoint mov);
+double nor_angl(double ray_angl);
+int		my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
+int 	get_rgba(int r, int g, int b, int a);
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);
