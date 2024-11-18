@@ -8,8 +8,8 @@ void	move(t_mlx *tmlx, t_dpoint mov)
 	int		new_x;
 	int		new_y;
 
-	new_x = roundf(tmlx->tplyr->pos_px.x + mov.x);
-	new_y = roundf(tmlx->tplyr->pos_px.y + mov.y);
+	new_x = (int)roundf(tmlx->tplyr->pos_px.x + mov.x);
+	new_y = (int)roundf(tmlx->tplyr->pos_px.y + mov.y);
 	map_box_x = (new_x / BOX_SIZE);
 	map_box_y = (new_y / BOX_SIZE);
 	if (tmlx->tmap.content[map_box_y][map_box_x] != '1' &&

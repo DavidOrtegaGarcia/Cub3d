@@ -56,6 +56,8 @@ void	push_line(t_map *map, char *line)
 	if (!new_content)
 		ft_error("Error al asignar memoria");
 	i = 0;
+	if((int)ft_strlen(line) > map->check.map_columns)
+		map->check.map_columns = ft_strlen(line);
 	while (i < map->check.assigned_lines)
 	{
 		new_content[i] = map->content[i];
@@ -63,11 +65,8 @@ void	push_line(t_map *map, char *line)
 	}
 	new_content[i] = ft_strdup(line);
 	map->check.map_found = 1;
-	//free(map->content);
-	if(map->content)
-		free_matrix(map->content, map->check.assigned_lines);
+	free(map->content);
 	map->content = new_content;
-	free_matrix(new_content, i);
 	map->check.assigned_lines++;
 }
 

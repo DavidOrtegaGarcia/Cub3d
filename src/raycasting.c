@@ -4,9 +4,13 @@ int wall_hit(t_mlx *tmlx, double x, double y)
 {
 	t_point map_pos;
 
-	map_pos.x = floor(x / BOX_SIZE); // get the x position in the map
-	map_pos.y = floor(y / BOX_SIZE); // get the y position in the map
+	if (x < 0 || y < 0)
+		return (0);
+	map_pos.x = (int)floor(x / BOX_SIZE); // get the x position in the map
+	map_pos.y = (int)floor(y / BOX_SIZE); // get the y position in the map
 
+	if ((map_pos.y >= tmlx->tmap.check.assigned_lines || map_pos.x >= tmlx->tmap.check.map_columns))
+		return (0);
 	if (tmlx->tmap.content[map_pos.y] != 0 && map_pos.x <= (int)ft_strlen(tmlx->tmap.content[map_pos.y])) 
 		if (tmlx->tmap.content[map_pos.y][map_pos.x] == '1') 
 			return (1);  
@@ -69,7 +73,7 @@ double get_dist_ver_w(t_mlx *tmlx, double ray_angl) // get the vertical intersec
 	if ((unit_circle(ray_angl, 'x') == 1 && y_step < 0) ||
 		(unit_circle(ray_angl, 'x') == 0 && y_step > 0)) // We adjusts the direction by determining to move up or down.
 		y_step *= -1;
-	while (wall_hit(tmlx, v_inter.x - x_ray_dir, v_inter.y) == 0)
+	while (v_inter.x >= 0 && v_inter.y >=0 && wall_hit(tmlx, v_inter.x - x_ray_dir, v_inter.y) == 0)
 	{
 		v_inter.x += x_step;
 		v_inter.y += y_step;
@@ -88,15 +92,15 @@ double get_dist_hor_w(t_mlx *tmlx, double ray_angl)
 	double y_step;
 	int  y_ray_dir; // Variable used to decied if the ray is proyected up or down
 
-	y_step = BOX_SIZE; // Vertical distance bettween every intersection point we check (diference between y coordinate)
-	x_step = BOX_SIZE / tan(ray_angl); // Horizontal distance bettween every intersection point we check (diference between x coordinate)
-	h_inter.y = floor(tmlx->tplyr->pos_px.y / BOX_SIZE) * BOX_SIZE; // We use floor to make sure the point is in the right border (y) of the start box (round down the number)
-	h_inter.x = tmlx->tplyr->pos_px.x + (h_inter.y - tmlx->tplyr->pos_px.y) / tan(ray_angl); // We put the point on the superior border(x) of the start box based on the ray_angl
-	y_ray_dir = check_inter(ray_angl, &h_inter.y, &y_step, 1);
+	x_step = BOX_SIZE; // Vertical distance bettween every intersection point we check (diference between y coordinate)
+	y_step = BOX_SIZE / tan(ray_angl); // Horizontal distance bettween every intersection point we check (diference between x coordinate)
+	h_inter.x = floor(tmlx->tplyr->pos_px.x / BOX_SIZE) * BOX_SIZE; // We use floor to make sure the point is in the right border (y) of the start box (round down the number)
+	h_inter.y = tmlx->tplyr->pos_px.y + (h_inter.x - tmlx->tplyr->pos_px.x) / tan(ray_angl); // We put the point on the superior border(x) of the start box based on the ray_angl
+	y_ray_dir = check_inter(ray_angl, &h_inter.x, &x_step, 1);
 	if ((unit_circle(ray_angl, 'y') == 1 && x_step > 0) ||
 		(unit_circle(ray_angl, 'y') == 0 && x_step < 0)) // We adjusts the direction by determining to move left or right.
 		x_step *= -1;
-	while (wall_hit(tmlx, h_inter.x, h_inter.y - y_ray_dir) == 0) 
+	while (h_inter.x >= 0 && h_inter.y >= 0 && wall_hit(tmlx, h_inter.x, h_inter.y - y_ray_dir) == 0) 
 	{
 		h_inter.x += x_step;
 		h_inter.y += y_step;

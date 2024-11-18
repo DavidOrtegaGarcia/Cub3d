@@ -26,6 +26,33 @@ void	assign(t_map *map, char *path, char *element)
 	}
 }
 
+void print_texture(mlx_texture_t *texture) {
+    if (texture == NULL) {
+        printf("Texture is NULL\n");
+        return;
+    }
+
+    printf("Texture info:\n");
+    printf("Width: %u\n", texture->width);
+    printf("Height: %u\n", texture->height);
+    printf("Bytes per pixel: %u\n", texture->bytes_per_pixel);
+
+    // Imprimir los primeros 10 píxeles (o toda la textura si es pequeña)
+    printf("First 10 pixels:\n");
+    for (unsigned int i = 0; i < 10 && i < texture->width * texture->height; i++) {
+        uint8_t *pixel = &texture->pixels[i * texture->bytes_per_pixel];
+        // Dependiendo del formato de píxel (por ejemplo, ARGB o RGB), ajusta el formato de salida
+        if (texture->bytes_per_pixel == 4) { // Supongamos ARGB
+            printf("Pixel %u: 0x%02x%02x%02x%02x\n", i, pixel[0], pixel[1], pixel[2], pixel[3]);
+        } else if (texture->bytes_per_pixel == 3) { // Supongamos RGB
+            printf("Pixel %u: 0x%02x%02x%02x\n", i, pixel[0], pixel[1], pixel[2]);
+        } else {
+            printf("Pixel %u: Unknown format\n", i);
+        }
+    }
+}
+
+
 void	assign_north(t_map *map, char *path)
 {
 	char	*ext;
@@ -35,9 +62,9 @@ void	assign_north(t_map *map, char *path)
 	ext = ft_substr(path, ft_strlen(path) - 4, ft_strlen(path));
 	if (map->check.found_north == 1)
 		ft_error("El elemento \"NO\" está repetido");
-	if (ft_strcmp(ext, ".xpm") != 0)
+	if (ft_strcmp(ext, ".png") != 0)
 	{
-		ft_error("Elemento North: La textura debe ser un archivo .xpm");
+		ft_error("Elemento North: La textura debe ser un archivo .png");
 	}
 	free(ext);
 	fd = open(path, O_RDONLY);
@@ -46,7 +73,8 @@ void	assign_north(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"NO\"");
 	}
-	map->north = mlx_load_xpm42(path);
+	map->north = mlx_load_png(path);
+	print_texture(map->north);
 	map->check.found_north = 1;
 	close(fd);
 }
@@ -60,9 +88,9 @@ void	assign_south(t_map *map, char *path)
 	ext = ft_substr(path, ft_strlen(path) - 4, ft_strlen(path));
 	if (map->check.found_south == 1)
 		ft_error("El elemento \"SO\" está repetido");
-	if (ft_strcmp(ext, ".xpm") != 0)
+	if (ft_strcmp(ext, ".png") != 0)
 	{
-		ft_error("Elemento South: La textura debe ser un archivo .xpm");
+		ft_error("Elemento South: La textura debe ser un archivo .png");
 	}
 	free(ext);
 	fd = open(path, O_RDONLY);
@@ -71,7 +99,8 @@ void	assign_south(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"SO\"");
 	}
-	map->south = mlx_load_xpm42(path);
+	map->south = mlx_load_png(path);
+	print_texture(map->south);
 	map->check.found_south = 1;
 	close(fd);
 }
@@ -85,9 +114,9 @@ void	assign_east(t_map *map, char *path)
 	ext = ft_substr(path, ft_strlen(path) - 4, ft_strlen(path));
 	if (map->check.found_east == 1)
 		ft_error("El elemento \"EA\" está repetido");
-	if (ft_strcmp(ext, ".xpm") != 0)
+	if (ft_strcmp(ext, ".png") != 0)
 	{
-		ft_error("Elemento East: La textura debe ser un archivo .xpm");
+		ft_error("Elemento East: La textura debe ser un archivo .png");
 	}
 	free(ext);
 	fd = open(path, O_RDONLY);
@@ -96,7 +125,8 @@ void	assign_east(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"EA\"");
 	}
-	map->east = mlx_load_xpm42(path);
+	map->east = mlx_load_png(path);
+	print_texture(map->east);
 	map->check.found_east = 1;
 	close(fd);
 }
@@ -110,9 +140,9 @@ void	assign_west(t_map *map, char *path)
 	ext = ft_substr(path, ft_strlen(path) - 4, ft_strlen(path));
 	if (map->check.found_west == 1)
 		ft_error("El elemento \"WE\" está repetido");
-	if (ft_strcmp(ext, ".xpm") != 0)
+	if (ft_strcmp(ext, ".png") != 0)
 	{
-		ft_error("Elemento West: La textura debe ser un archivo .xpm");
+		ft_error("Elemento West: La textura debe ser un archivo .png");
 	}
 	free(ext);
 	fd = open(path, O_RDONLY);
@@ -121,7 +151,8 @@ void	assign_west(t_map *map, char *path)
 		free(path);
 		ft_error("Error al abrir la ruta de la textura \"WE\"");
 	}
-	map->west = mlx_load_xpm42(path);
+	map->west = mlx_load_png(path);
+	print_texture(map->west);
 	map->check.found_west = 1;
 	close(fd);
 }

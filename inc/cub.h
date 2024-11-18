@@ -32,11 +32,6 @@ typedef struct s_point
 	int y;
 }	t_point;
 
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}	t_point;
 
 typedef struct s_color
 {
@@ -69,13 +64,12 @@ typedef struct s_map
 	t_check		check;
 	char		**content;
 	char		orientation;
-	xpm_t		*north;
-	xpm_t		*south;
-	xpm_t		*east;
-	xpm_t		*west;
+	mlx_texture_t		*north;
+	mlx_texture_t		*south;
+	mlx_texture_t		*east;
+	mlx_texture_t		*west;
 	t_color		floor;
 	t_color		celling;
-	t_point		p_plyr;
 }	t_map;
 
 typedef struct s_player //the player structure

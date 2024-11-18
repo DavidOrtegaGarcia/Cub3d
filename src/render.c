@@ -61,20 +61,19 @@ mlx_texture_t	*get_texture(t_mlx *tmlx)
 	if (tmlx->tray->wall_f == 0) // The wall is vertical
 	{
 		if (tmlx->tray->ray_angl > M_PI / 2 && tmlx->tray->ray_angl < 3 * (M_PI / 2))
-			return (&tmlx->tmap.east->texture);
+			return (tmlx->tmap.east);
 		else
-			return (&tmlx->tmap.west->texture);
+			return (tmlx->tmap.west);
 	}
 	else // The wall is horizontal
 	{
 		if (tmlx->tray->ray_angl > 0 && tmlx->tray->ray_angl < M_PI)
-			return (&tmlx->tmap.south->texture);
+			return (tmlx->tmap.south);
 		else
-			return (&tmlx->tmap.north->texture);
+			return (tmlx->tmap.north);
 	}
 }
-
-
+  
 void print_wall(t_mlx *tmlx, double wall_height, int top_wpixel, int bot_wpixel) 
 {
 	mlx_texture_t	*texture;
