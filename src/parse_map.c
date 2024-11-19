@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 21:45:25 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 21:48:11 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	is_position_valid(t_map *map, int y, int x)
@@ -47,17 +59,23 @@ void	push_line(t_map *map, char *line)
 {
 	char	**new_content;
 	int		i;
-	
+	char	*aux;
+
+	aux = ft_strtrim(line, " \n");
 	if (map->check.map_found == 0 && \
-	(!line || ft_strcmp(ft_strtrim(line, " \n"), "") == 0))
+	(!line || ft_strcmp(aux, "") == 0))
+	{
+		free(aux);
 		return ;
+	}
+	free(aux);
 	check_line(map, line);
 	i = map->check.assigned_lines + 1;
 	new_content = (char **)malloc((i) * sizeof(char *));
 	if (!new_content)
 		ft_error("Error al asignar memoria");
 	i = 0;
-	if((int)ft_strlen(line) > map->check.map_columns)
+	if ((int)ft_strlen(line) > map->check.map_columns)
 		map->check.map_columns = ft_strlen(line);
 	while (i < map->check.assigned_lines)
 	{
@@ -75,7 +93,7 @@ void	check_line(t_map *map, char *line)
 {
 	int		i;
 	char	*valid_chars;
-	char 	*aux;
+	char	*aux;
 
 	valid_chars = "01NSWE ";
 	i = 0;

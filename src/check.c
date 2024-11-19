@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 22:00:03 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 22:00:10 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	ft_check_input(t_map *map, int argc, char *argv)
@@ -12,11 +24,9 @@ void	ft_check_input(t_map *map, int argc, char *argv)
 		else
 			ft_error("Multiple Argv Detected");
 	}
-
 	str = argv;
 	len = (int)ft_strlen(str);
 	map->check.path = str;
-
 	if (len < 4)
 		ft_error("File format error");
 	else if (ft_strcmp(str + len - 4, ".cub") != 0)

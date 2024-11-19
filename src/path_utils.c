@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 21:45:00 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 21:45:02 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	manage_line(t_map *map, char *line)
 {
 	char	**splitted;
-	char *aux;
+	char	*aux;
 
 	if (!found_all(map))
 	{
 		aux = ft_strtrim(line, " \n");
-		free(line);
 		line = aux;
 	}
 	if (found_all(map))
@@ -22,5 +33,6 @@ void	manage_line(t_map *map, char *line)
 		if (is_element(splitted[0]))
 			assign(map, splitted[1], is_element(splitted[0]));
 		free_matrix(splitted, 2);
+		free(line);
 	}
 }

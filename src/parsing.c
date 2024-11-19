@@ -1,24 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 21:45:11 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 21:45:19 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	ft_parse(t_map *map)
 {
 	get_paths(map);
 	ft_check_map(map);
-	show_map(map);
-	ft_printf("%c", map->orientation);
-}
-
-void	show_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->check.assigned_lines)
-	{
-		if (map->content[i])
-		{
-			puts(map->content[i]);
-		}
-		i++;
-	}
 }

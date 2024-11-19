@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   paths.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 21:44:33 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 21:44:49 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	get_paths(t_map *map)
@@ -10,12 +22,13 @@ void	get_paths(t_map *map)
 	while (map->check.lines_to_map < map->check.map_lines)
 	{
 		aux = get_next_line(fd);
+		if (!aux)
+			break ;
 		line = ft_strtrim(aux, "\n");
 		free(aux);
 		manage_line(map, line);
 		map->check.lines_to_map++;
-		//if (line)
-		//	free(line);
+		free(line);
 	}
 	if (found_all(map) == 0)
 		ft_error("Faltan algunos elementos");

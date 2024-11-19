@@ -1,5 +1,16 @@
-#include "cub.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 21:49:03 by emiro-co          #+#    #+#             */
+/*   Updated: 2024/11/19 21:52:48 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "cub.h"
 
 void	move(t_mlx *tmlx, t_dpoint mov)
 {
@@ -23,13 +34,13 @@ void	move(t_mlx *tmlx, t_dpoint mov)
 
 void	rotate(t_mlx *tmlx, int dir)
 {
-	if (dir == 1) // TURN RIGTH
+	if (dir == 1)
 	{
 		tmlx->tplyr->view_dir += ROTATION_SPD;
-		if (tmlx->tplyr->view_dir > 2 * M_PI) // If the player rotate 360 degrers we ajust the value to stay in the correct range
+		if (tmlx->tplyr->view_dir > 2 * M_PI)
 			tmlx->tplyr->view_dir -= 2 * M_PI;
 	}
-	else // TURN LEFT
+	else
 	{
 		tmlx->tplyr->view_dir -= ROTATION_SPD;
 		if (tmlx->tplyr->view_dir < 0)
@@ -43,22 +54,22 @@ void	movment_hook(t_mlx *tmlx, t_dpoint mov)
 		rotate(tmlx, 1);
 	if (tmlx->tplyr->rot_f == -1)
 		rotate(tmlx, -1);
-	if (tmlx->tplyr->up_dwn_f == 1) // MOVE UP
+	if (tmlx->tplyr->up_dwn_f == 1)
 	{
 		mov.x = cos(tmlx->tplyr->view_dir) * PLAYER_SPD;
 		mov.y = sin(tmlx->tplyr->view_dir) * PLAYER_SPD;
 	}
-	if (tmlx->tplyr->up_dwn_f == -1) // MOVE DOWN
+	if (tmlx->tplyr->up_dwn_f == -1)
 	{
 		mov.x = -cos(tmlx->tplyr->view_dir) * PLAYER_SPD;
 		mov.y = -sin(tmlx->tplyr->view_dir) * PLAYER_SPD;
 	}
-	if (tmlx->tplyr->lft_rhg_f == 1) // MOVE RIGHT
+	if (tmlx->tplyr->lft_rhg_f == 1)
 	{
 		mov.x = -sin(tmlx->tplyr->view_dir) * PLAYER_SPD;
 		mov.y = cos(tmlx->tplyr->view_dir) * PLAYER_SPD;
 	}
-	if (tmlx->tplyr->lft_rhg_f == -1) // MOVE LEFT
+	if (tmlx->tplyr->lft_rhg_f == -1)
 	{
 		mov.x = sin(tmlx->tplyr->view_dir) * PLAYER_SPD;
 		mov.y = -cos(tmlx->tplyr->view_dir) * PLAYER_SPD;
@@ -68,14 +79,14 @@ void	movment_hook(t_mlx *tmlx, t_dpoint mov)
 
 void	release_key(mlx_key_data_t data_key, t_mlx *tmlx)
 {
-	if ((data_key.key == MLX_KEY_W && data_key.action == MLX_RELEASE) ||
-		(data_key.key == MLX_KEY_S && data_key.action == MLX_RELEASE))
+	if ((data_key.key == MLX_KEY_W && data_key.action == MLX_RELEASE) \
+	|| (data_key.key == MLX_KEY_S && data_key.action == MLX_RELEASE))
 		tmlx->tplyr->up_dwn_f = 0;
-	else if ((data_key.key == MLX_KEY_A && data_key.action == MLX_RELEASE) ||
-		(data_key.key == MLX_KEY_D && data_key.action == MLX_RELEASE))
+	else if ((data_key.key == MLX_KEY_A && data_key.action == MLX_RELEASE) \
+	|| (data_key.key == MLX_KEY_D && data_key.action == MLX_RELEASE))
 		tmlx->tplyr->lft_rhg_f = 0;
-	else if ((data_key.key == MLX_KEY_LEFT && data_key.action == MLX_RELEASE) ||
-		(data_key.key == MLX_KEY_RIGHT && data_key.action == MLX_RELEASE))
+	else if ((data_key.key == MLX_KEY_LEFT && data_key.action == MLX_RELEASE) \
+	|| (data_key.key == MLX_KEY_RIGHT && data_key.action == MLX_RELEASE))
 		tmlx->tplyr->rot_f = 0;
 }
 
@@ -97,6 +108,6 @@ void	key_hook(mlx_key_data_t data_key, void *param)
 	else if (data_key.key == MLX_KEY_LEFT && data_key.action == MLX_PRESS)
 		tmlx->tplyr->rot_f = -1;
 	else if (data_key.key == MLX_KEY_RIGHT && data_key.action == MLX_PRESS)
-	tmlx->tplyr->rot_f = 1;
+		tmlx->tplyr->rot_f = 1;
 	release_key(data_key, tmlx);
 }
