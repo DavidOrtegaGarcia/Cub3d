@@ -47,6 +47,7 @@ void	push_line(t_map *map, char *line)
 {
 	char	**new_content;
 	int		i;
+	
 	if (map->check.map_found == 0 && \
 	(!line || ft_strcmp(ft_strtrim(line, " \n"), "") == 0))
 		return ;

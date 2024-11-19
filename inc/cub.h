@@ -129,12 +129,20 @@ void	ft_error(const char *msg);
 //	--- GAME.C ---
 void init_game(t_map tmap);
 void cast_rays(t_mlx *tmlx);
-void render(t_mlx *tmlx, int ray);
+//void render(t_mlx *tmlx, int ray);
 void	key_hook(mlx_key_data_t data_key, void *param);
 void	movment_hook(t_mlx *tmlx, t_dpoint mov);
-double nor_angl(double ray_angl);
-int		my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
+//double nor_angl(double ray_angl);
+//int		my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
 int 	get_rgba(int r, int g, int b, int a);
+
+
+/* archivo castigado */
+void	render_wall(t_mlx *mlx, int ray);
+float	nor_angle(float angle);
+void	my_mlx_pixel_put(t_mlx *tmlx, int x, int y, int color);
+
+
 
 //	--- PATHS.C ---
 void	get_paths(t_map *map);

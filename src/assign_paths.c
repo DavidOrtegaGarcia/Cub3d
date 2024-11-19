@@ -12,14 +12,14 @@ void	assign(t_map *map, char *path, char *element)
 		assign_west(map, path);
 	else if ((ft_strcmp(element, "F") == 0))
 	{
-		map->floor = get_color(&path[1]);
+		map->floor = get_color(&path[0]);
 		if (map->check.found_floor == 1)
 			ft_error("El elemento \"F\" esta repetido");
 		map->check.found_floor = 1;
 	}
 	else if ((ft_strcmp(element, "C") == 0))
 	{
-		map->celling = get_color(&path[1]);
+		map->celling = get_color(&path[0]);
 		if (map->check.found_celling == 1)
 			ft_error("El elemento \"C\" esta repetido");
 		map->check.found_celling = 1;

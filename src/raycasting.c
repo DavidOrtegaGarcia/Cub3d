@@ -1,23 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/16 17:36:01 by afatir            #+#    #+#             */
+/*   Updated: 2024/11/19 02:24:22 by emiro-co         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
-int wall_hit(t_mlx *tmlx, double x, double y)
-{
-	t_point map_pos;
-
-	if (x < 0 || y < 0)
-		return (0);
-	map_pos.x = (int)floor(x / BOX_SIZE); // get the x position in the map
-	map_pos.y = (int)floor(y / BOX_SIZE); // get the y position in the map
-
-	if ((map_pos.y >= tmlx->tmap.check.assigned_lines || map_pos.x >= tmlx->tmap.check.map_columns))
-		return (0);
-	if (tmlx->tmap.content[map_pos.y] != 0 && map_pos.x <= (int)ft_strlen(tmlx->tmap.content[map_pos.y])) 
-		if (tmlx->tmap.content[map_pos.y][map_pos.x] == '1') 
-			return (1);  
-	return (0);
-}
-
-int unit_circle(double ray_angl, char axis) 
+int unit_circle(float ray_angl, char axis) 
 {
 	if (axis == 'x')
 	{
@@ -32,110 +27,150 @@ int unit_circle(double ray_angl, char axis)
 	return (0); //The ray is facing down or right (Positive axis)
 }
 
-// Detrminate the direction of the ray and adjust inter and step variables consquently
-int check_inter(double ray_angl, double *inter, double *step, int is_horizon)
+int	inter_check(float angle, float *inter, float *step, int is_horizon)
 {
-	if (is_horizon == 1)
+	if (is_horizon)
 	{
-		if (ray_angl > 0 && ray_angl < M_PI) // Check if the ray aims down 
+		if (angle > 0 && angle < M_PI)
 		{
-			*inter += BOX_SIZE;  // NOTE: The coordinate system used in 2D graphics works the opposite of the Cartesian system 
-								// on the y axis, therefore to go down we increment y axis instead of decrement it
-			return (-1); // Ray facing down 
+			*inter += BOX_SIZE;
+			return (-1);
 		}
-		*step *= -1; // We will decrement y axis insteat of increment it to go rigth
+		*step *= -1;
 	}
 	else
 	{
-		if (!(ray_angl > M_PI / 2 && ray_angl < 3 * M_PI / 2)) // Check if the ray aims right 
+		if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2))
 		{
 			*inter += BOX_SIZE;
-			return (-1); // Ray facing right
+			return (-1);
 		}
-		*step *= -1; // We will decrement x axis insteat of increment it to go left
+		*step *= -1;
 	}
-	return (1); // Ray aims up or left
+	return (1);
 }
 
-double get_dist_ver_w(t_mlx *tmlx, double ray_angl) // get the vertical intersection
+int	wall_hit(float x, float y, t_mlx *mlx)
 {
-	// An intersection is the point between the ray we cast and the edge of one of the boxes that conforms the map
-	t_dpoint v_inter;
-	double x_step;
-	double y_step;
-	int  x_ray_dir; // Variable used to decied if the ray is proyected left or right
+	int		x_m;
+	int		y_m;
 
-	x_step = BOX_SIZE; 
-	y_step = BOX_SIZE * tan(ray_angl);
-	v_inter.x = floor(tmlx->tplyr->pos_px.x / BOX_SIZE) * BOX_SIZE;
-	v_inter.y = tmlx->tplyr->pos_px.y + (v_inter.x - tmlx->tplyr->pos_px.x) * tan(ray_angl);
-	x_ray_dir = check_inter(ray_angl, &v_inter.x, &x_step, 0); 
-	if ((unit_circle(ray_angl, 'x') == 1 && y_step < 0) ||
-		(unit_circle(ray_angl, 'x') == 0 && y_step > 0)) // We adjusts the direction by determining to move up or down.
-		y_step *= -1;
-	while (v_inter.x >= 0 && v_inter.y >=0 && wall_hit(tmlx, v_inter.x - x_ray_dir, v_inter.y) == 0)
-	{
-		v_inter.x += x_step;
-		v_inter.y += y_step;
-	}
-	tmlx->tray->vertical.x = v_inter.x;
-	tmlx->tray->vertical.y = v_inter.y;
-	return (sqrt(pow(v_inter.x - tmlx->tplyr->pos_px.x, 2) + 
-			pow(v_inter.y - tmlx->tplyr->pos_px.y, 2))); // get the distance (Pythagoras’s theorem (a2 + b2 = c2))
+	if (x < 0 || y < 0)
+		return (0);
+	x_m = floor (x / BOX_SIZE);
+	y_m = floor (y / BOX_SIZE);
+	if ((y_m >= mlx->tmap.check.assigned_lines || x_m >= mlx->tmap.check.map_columns))
+		return (0);
+	if (mlx->tmap.content[y_m] && x_m <= (int)ft_strlen(mlx->tmap.content[y_m]))
+		if (mlx->tmap.content[y_m][x_m] == '1')
+			return (0);
+	return (1);
 }
 
-double get_dist_hor_w(t_mlx *tmlx, double ray_angl)
+float get_h_inter(t_mlx *mlx, float angl)
 {
-	// An intersection is the point between the ray we cast and the edge of one of the boxes that conforms the map
-	t_dpoint h_inter;
-	double x_step;
-	double y_step;
-	int  y_ray_dir; // Variable used to decied if the ray is proyected up or down
+    float h_x, h_y;
+    float x_step, y_step;
 
-	x_step = BOX_SIZE; // Vertical distance bettween every intersection point we check (diference between y coordinate)
-	y_step = BOX_SIZE / tan(ray_angl); // Horizontal distance bettween every intersection point we check (diference between x coordinate)
-	h_inter.x = floor(tmlx->tplyr->pos_px.x / BOX_SIZE) * BOX_SIZE; // We use floor to make sure the point is in the right border (y) of the start box (round down the number)
-	h_inter.y = tmlx->tplyr->pos_px.y + (h_inter.x - tmlx->tplyr->pos_px.x) / tan(ray_angl); // We put the point on the superior border(x) of the start box based on the ray_angl
-	y_ray_dir = check_inter(ray_angl, &h_inter.x, &x_step, 1);
-	if ((unit_circle(ray_angl, 'y') == 1 && x_step > 0) ||
-		(unit_circle(ray_angl, 'y') == 0 && x_step < 0)) // We adjusts the direction by determining to move left or right.
-		x_step *= -1;
-	while (h_inter.x >= 0 && h_inter.y >= 0 && wall_hit(tmlx, h_inter.x, h_inter.y - y_ray_dir) == 0) 
-	{
-		h_inter.x += x_step;
-		h_inter.y += y_step;
-	}
-	tmlx->tray->horizontal.x = h_inter.x;
-	tmlx->tray->horizontal.y = h_inter.y;
-	return (sqrt(pow(h_inter.x - tmlx->tplyr->pos_px.x, 2) +
-			pow(h_inter.y - tmlx->tplyr->pos_px.y, 2))); // get the distance (Pythagoras’s theorem (a2 + b2 = c2))
+    // Calcular la primera intersección horizontal
+    h_y = floor(mlx->tplyr->pos_px.y / BOX_SIZE) * BOX_SIZE;
+
+    // Ajustar hacia arriba o hacia abajo según la dirección del rayo
+    if (angl > 0 && angl < M_PI) // Rayo hacia arriba
+        h_y += BOX_SIZE;
+    else                         // Rayo hacia abajo
+        h_y -= 1;
+
+    // Calcular x inicial basándonos en la intersección y
+    h_x = mlx->tplyr->pos_px.x + (h_y - mlx->tplyr->pos_px.y) / tan(angl);
+
+    // Definir pasos
+    y_step = (angl > 0 && angl < M_PI) ? BOX_SIZE : -BOX_SIZE;
+    x_step = BOX_SIZE / tan(angl);
+
+    // Ajustar el signo de x_step según la dirección del rayo
+    if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0))
+        x_step *= -1;
+
+    // Iterar hasta encontrar una pared
+    while (wall_hit(h_x, h_y - ((angl > 0 && angl < M_PI) ? 1 : 0), mlx))
+    {
+        h_x += x_step;
+        h_y += y_step;
+    }
+
+    // Guardar coordenadas de la intersección
+    mlx->tray->horizontal.x = h_x;
+    mlx->tray->horizontal.y = h_y;
+
+    return sqrt(pow(h_x - mlx->tplyr->pos_px.x, 2) + pow(h_y - mlx->tplyr->pos_px.y, 2));
 }
 
 
-void cast_rays(t_mlx *tmlx)
+float get_v_inter(t_mlx *mlx, float angl)
 {
-	double dist_hor_w; 
-	double dist_ver_w;
-	int  ray;
+    float v_x, v_y;
+    float x_step, y_step;
 
-	ray = 0; // Number of rays (we have to cast one per every pixel in our resolution)
-	tmlx->tray->ray_angl = tmlx->tplyr->view_dir - (tmlx->tplyr->fov_rad / 2); // the start angle (Player view direction - Field of view)
-	while (ray < tmlx->mlx->width)
+    // Calcular la primera intersección vertical
+    v_x = floor(mlx->tplyr->pos_px.x / BOX_SIZE) * BOX_SIZE;
+
+    // Ajustar hacia la derecha o izquierda según la dirección del rayo
+    if (!(angl > M_PI / 2 && angl < 3 * M_PI / 2)) // Rayo hacia la derecha
+        v_x += BOX_SIZE;
+    else                                          // Rayo hacia la izquierda
+        v_x -= 1;
+
+    // Calcular y inicial basándonos en la intersección x
+    v_y = mlx->tplyr->pos_px.y + (v_x - mlx->tplyr->pos_px.x) * tan(angl);
+
+    // Definir pasos
+    x_step = (angl > M_PI / 2 && angl < 3 * M_PI / 2) ? -BOX_SIZE : BOX_SIZE;
+    y_step = BOX_SIZE * tan(angl);
+
+    // Ajustar el signo de y_step según la dirección del rayo
+    if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x') && y_step > 0))
+        y_step *= -1;
+
+    // Iterar hasta encontrar una pared
+    while (wall_hit(v_x - ((angl > M_PI / 2 && angl < 3 * M_PI / 2) ? 1 : 0), v_y, mlx))
+    {
+        v_x += x_step;
+        v_y += y_step;
+    }
+
+    // Guardar coordenadas de la intersección
+    mlx->tray->vertical.x = v_x;
+    mlx->tray->vertical.y = v_y;
+
+    return sqrt(pow(v_x - mlx->tplyr->pos_px.x, 2) + pow(v_y - mlx->tplyr->pos_px.y, 2));
+}
+
+void	cast_rays(t_mlx *mlx)
+{
+	double	h_inter;
+	double	v_inter;
+	int		ray;
+
+	ray = 0;
+	mlx->tray->ray_angl = mlx->tplyr->view_dir - (mlx->tplyr->fov_rad / 2);
+	while (ray < S_WIDTH)
 	{
-		tmlx->tray->wall_f = 0; // Flag to know if the wall is horizontal or vertical
-		dist_hor_w = get_dist_hor_w(tmlx, nor_angl(tmlx->tray->ray_angl)); // get the distance to the closest horizontal wall 
-		dist_ver_w = get_dist_ver_w(tmlx, nor_angl(tmlx->tray->ray_angl)); // get the distance to the closest vertical wall
-		if (dist_ver_w <= dist_hor_w) // get the distance to the closest wall
-			tmlx->tray->wall_dist = dist_ver_w;
+		
+		h_inter = get_h_inter(mlx, nor_angle(mlx->tray->ray_angl));
+		v_inter = get_v_inter(mlx, nor_angle(mlx->tray->ray_angl));
+		if (v_inter <= h_inter)
+		{
+			mlx->tray->wall_dist = v_inter;
+			mlx->tray->wall_f = 0;
+		}
 		else
 		{
-			tmlx->tray->wall_dist = dist_hor_w;
-			tmlx->tray->wall_f = 1;
+			mlx->tray->wall_dist = h_inter;
+			mlx->tray->wall_f = 1;
 		}
-		render(tmlx, ray);
+		render_wall(mlx, ray);
 		ray++;
-		tmlx->tray->ray_angl += (tmlx->tplyr->fov_rad / tmlx->mlx->width); // We get the next projection angle to render (this value is got in realtion of our position in the map)
-										   								   // Actual angle + Field of view / Width of the resolution
-		
+		mlx->tray->ray_angl += (mlx->tplyr->fov_rad / S_WIDTH);
 	}
 }
