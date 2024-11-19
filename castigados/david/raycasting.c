@@ -114,9 +114,9 @@ double get_dist_hor_w(t_mlx *tmlx, double ray_angl)
 
 void cast_rays(t_mlx *tmlx)
 {
-	double dist_hor_w; 
-	double dist_ver_w;
-	int  ray;
+	double	dist_hor_w; 
+	double	dist_ver_w;
+	int  	ray;
 
 	ray = 0; // Number of rays (we have to cast one per every pixel in our resolution)
 	tmlx->tray->ray_angl = tmlx->tplyr->view_dir - (tmlx->tplyr->fov_rad / 2); // the start angle (Player view direction - Field of view)

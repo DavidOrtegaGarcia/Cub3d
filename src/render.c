@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daortega <daortega@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:05:46 by afatir            #+#    #+#             */
-/*   Updated: 2024/11/19 12:45:22 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:26:29 by daortega         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void draw_wall(t_mlx *mlx, int t_pix, int b_pix, double wall_h)
 	draw_floor_ceiling(mlx, ray, t_pix, b_pix);
 } */
 
-void render_wall(t_mlx *mlx, int ray)
+void render(t_mlx *mlx, int ray)
 {
     double wall_h;
     double t_pix, b_pix;
