@@ -20,6 +20,12 @@
 # define PLAYER_SPD 4 // player speed
 
 //	---Structures---
+typedef struct s_fpoint
+{
+	float x; // axis x
+	float y; // axis y
+}	t_fpoint;
+
 typedef struct s_dpoint
 {
 	double x; // axis x

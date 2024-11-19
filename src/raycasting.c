@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:36:01 by afatir            #+#    #+#             */
-/*   Updated: 2024/11/19 02:24:22 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:32:00 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,35 +76,36 @@ float get_h_inter(t_mlx *mlx, float angl)
     h_y = floor(mlx->tplyr->pos_px.y / BOX_SIZE) * BOX_SIZE;
 
     // Ajustar hacia arriba o hacia abajo según la dirección del rayo
-    if (angl > 0 && angl < M_PI) // Rayo hacia arriba
-        h_y += BOX_SIZE;
-    else                         // Rayo hacia abajo
-        h_y -= 1;
+    if (angl > 0 && angl < M_PI)  // Rayo hacia abajo
+        h_y += BOX_SIZE;          // El rayo va hacia abajo, entonces se suma BOX_SIZE
+    else                           // Rayo hacia arriba
+        h_y -= 1;                 // El rayo va hacia arriba, entonces se resta 1
 
     // Calcular x inicial basándonos en la intersección y
     h_x = mlx->tplyr->pos_px.x + (h_y - mlx->tplyr->pos_px.y) / tan(angl);
 
     // Definir pasos
-    y_step = (angl > 0 && angl < M_PI) ? BOX_SIZE : -BOX_SIZE;
-    x_step = BOX_SIZE / tan(angl);
+    y_step = (angl > 0 && angl < M_PI) ? BOX_SIZE : -BOX_SIZE;  // Ajuste de y_step según la dirección
+    x_step = BOX_SIZE / tan(angl); // Paso en el eje X según el ángulo
 
     // Ajustar el signo de x_step según la dirección del rayo
     if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0))
         x_step *= -1;
 
     // Iterar hasta encontrar una pared
-    while (wall_hit(h_x, h_y - ((angl > 0 && angl < M_PI) ? 1 : 0), mlx))
+    while (wall_hit(h_x, h_y, mlx))
     {
-        h_x += x_step;
-        h_y += y_step;
+        h_x += x_step; // Actualizar posición de x
+        h_y += y_step; // Actualizar posición de y
     }
 
-    // Guardar coordenadas de la intersección
+    // Guardar las coordenadas de la intersección
     mlx->tray->horizontal.x = h_x;
     mlx->tray->horizontal.y = h_y;
 
-    return sqrt(pow(h_x - mlx->tplyr->pos_px.x, 2) + pow(h_y - mlx->tplyr->pos_px.y, 2));
+    return sqrt(pow(h_x - mlx->tplyr->pos_px.x, 2) + pow(h_y - mlx->tplyr->pos_px.y, 2)); // Devolver la distancia
 }
+
 
 
 float get_v_inter(t_mlx *mlx, float angl)

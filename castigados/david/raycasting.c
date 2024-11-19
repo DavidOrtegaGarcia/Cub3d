@@ -126,13 +126,16 @@ void cast_rays(t_mlx *tmlx)
 		dist_hor_w = get_dist_hor_w(tmlx, nor_angl(tmlx->tray->ray_angl)); // get the distance to the closest horizontal wall 
 		dist_ver_w = get_dist_ver_w(tmlx, nor_angl(tmlx->tray->ray_angl)); // get the distance to the closest vertical wall
 		if (dist_ver_w <= dist_hor_w) // get the distance to the closest wall
+		{
 			tmlx->tray->wall_dist = dist_ver_w;
+			tmlx->tray->wall_f = 0; // Flag to know if the wall is horizontal or vertical
+		}
 		else
 		{
 			tmlx->tray->wall_dist = dist_hor_w;
 			tmlx->tray->wall_f = 1;
 		}
-		render(tmlx, ray);
+		render_wall(tmlx, ray);
 		ray++;
 		tmlx->tray->ray_angl += (tmlx->tplyr->fov_rad / tmlx->mlx->width); // We get the next projection angle to render (this value is got in realtion of our position in the map)
 										   								   // Actual angle + Field of view / Width of the resolution
