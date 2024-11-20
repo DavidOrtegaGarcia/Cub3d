@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:11:44 by emiro-co          #+#    #+#             */
-/*   Updated: 2024/11/19 21:43:10 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:47:49 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ t_fpoint	ver_angl(float a, float *ray_islft, t_fpoint v_itr, float *x_stp)
 {
 	if (a > M_PI / 2 && a < 3 * M_PI / 2)
 	{
-		v_itr.x -= 1;
-		*x_stp = -BOX_SIZE;
+		*x_stp *= -1;
 		*ray_islft = 1;
 	}
 	else
@@ -27,14 +26,14 @@ t_fpoint	ver_angl(float a, float *ray_islft, t_fpoint v_itr, float *x_stp)
 }
 
 /* Check the ray angle to know if it's up or down and fix values */
-t_fpoint	hor_angl(float a, t_fpoint h_itr, float *y_stp)
+t_fpoint	hor_angl(float a, float *ray_isdwn, t_fpoint h_itr, float *y_stp)
 {
 	if (a > 0 && a < M_PI)
 		h_itr.y += BOX_SIZE;
 	else
 	{
-		h_itr.y -= 1;
-		*y_stp = -BOX_SIZE;
+		*ray_isdwn = 1;
+		*y_stp *= -1;
 	}
 	return (h_itr);
 }

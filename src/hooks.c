@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:49:03 by emiro-co          #+#    #+#             */
-/*   Updated: 2024/11/19 21:52:48 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:08:26 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,25 @@
 
 void	move(t_mlx *tmlx, t_dpoint mov)
 {
-	int		map_box_x;
-	int		map_box_y;
-	int		new_x;
-	int		new_y;
+	t_point	new_pos;
+	int		left_margin_x;
+	int		right_margin_x;
+	int		top_margin_y;
+	int		bottom_margin_y;
 
-	new_x = (int)roundf(tmlx->tplyr->pos_px.x + mov.x);
-	new_y = (int)roundf(tmlx->tplyr->pos_px.y + mov.y);
-	map_box_x = (new_x / BOX_SIZE);
-	map_box_y = (new_y / BOX_SIZE);
-	if (tmlx->tmap.content[map_box_y][map_box_x] != '1' &&
-	(tmlx->tmap.content[map_box_y][tmlx->tplyr->pos_px.x / BOX_SIZE] != '1' &&
-	tmlx->tmap.content[tmlx->tplyr->pos_px.y / BOX_SIZE][map_box_x] != '1'))
+	new_pos.x = (int)roundf(tmlx->tplyr->pos_px.x + mov.x);
+	new_pos.y = (int)roundf(tmlx->tplyr->pos_px.y + mov.y);
+	left_margin_x = (new_pos.x - COLLISION_MARGIN) / BOX_SIZE;
+	right_margin_x = (new_pos.x + COLLISION_MARGIN) / BOX_SIZE;
+	top_margin_y = (new_pos.y - COLLISION_MARGIN) / BOX_SIZE;
+	bottom_margin_y = (new_pos.y + COLLISION_MARGIN) / BOX_SIZE;
+	if (tmlx->tmap.content[top_margin_y][left_margin_x] != '1' &&
+		tmlx->tmap.content[top_margin_y][right_margin_x] != '1' &&
+		tmlx->tmap.content[bottom_margin_y][left_margin_x] != '1' &&
+		tmlx->tmap.content[bottom_margin_y][right_margin_x] != '1')
 	{
-		tmlx->tplyr->pos_px.x = new_x;
-		tmlx->tplyr->pos_px.y = new_y;
+		tmlx->tplyr->pos_px.x = new_pos.x;
+		tmlx->tplyr->pos_px.y = new_pos.y;
 	}
 }
 

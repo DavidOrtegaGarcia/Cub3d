@@ -40,7 +40,7 @@ $(NAME): $(OBJC)
 	@$(CC) $(CFLAGS) $(OBJC) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) $(LIBS) -o $(NAME)
 	@echo "${GREEN}Cub Compiled${NC}"
 	
-$(DIR_O)%.o: %.c $(LIB_A) Makefile
+$(DIR_O)%.o: %.c $(LIB_A) Makefile inc/cub.h
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "${YELLOW}Compiling obj $@...${NC}"

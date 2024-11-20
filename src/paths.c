@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:44:33 by emiro-co          #+#    #+#             */
-/*   Updated: 2024/11/19 21:44:49 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:28:45 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_paths(t_map *map)
 		aux = get_next_line(fd);
 		if (!aux)
 			break ;
-		line = ft_strtrim(aux, "\n");
+		line = ft_strtrim(aux, " \n");
 		free(aux);
 		manage_line(map, line);
 		map->check.lines_to_map++;

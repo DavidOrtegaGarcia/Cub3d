@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:36:01 by afatir            #+#    #+#             */
-/*   Updated: 2024/11/19 21:42:26 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:48:40 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,22 @@ float	get_dist_ver_w(t_mlx *tmlx, float ang, float ray_is_left)
 	pow(v_inter.y - tmlx->tplyr->pos_px.y, 2)));
 }
 
-float	get_dist_hor_w(t_mlx *tmlx, float ray_angl)
+float	get_dist_hor_w(t_mlx *tmlx, float ray_angl, float ray_is_down)
 {
 	t_fpoint	h_inter;
 	float		x_step;
 	float		y_step;
 
 	y_step = BOX_SIZE;
+	x_step = BOX_SIZE / tan(ray_angl);
 	h_inter.y = floor(tmlx->tplyr->pos_px.y / BOX_SIZE) * BOX_SIZE;
-	h_inter = hor_angl(ray_angl, h_inter, &y_step);
+	h_inter = hor_angl(ray_angl, &ray_is_down, h_inter, &y_step);
 	h_inter.x = tmlx->tplyr->pos_px.x + \
 	(h_inter.y - tmlx->tplyr->pos_px.y) / tan(ray_angl);
-	x_step = BOX_SIZE / tan(ray_angl);
 	if ((unit_circle(ray_angl, 'y') && x_step > 0) || \
 	(!unit_circle(ray_angl, 'y') && x_step < 0))
 		x_step *= -1;
-	while (wall_hit(tmlx, h_inter.x, h_inter.y))
+	while (wall_hit(tmlx, h_inter.x, h_inter.y - ray_is_down))
 	{
 		h_inter.x += x_step;
 		h_inter.y += y_step;
@@ -107,7 +107,7 @@ void	cast_rays(t_mlx *tmlx)
 	tmlx->tray->ray_angl = tmlx->tplyr->view_dir - (tmlx->tplyr->fov_rad / 2);
 	while (ray < tmlx->mlx->width)
 	{
-		dist_hor_w = get_dist_hor_w(tmlx, nor_angle(tmlx->tray->ray_angl));
+		dist_hor_w = get_dist_hor_w(tmlx, nor_angle(tmlx->tray->ray_angl), 0);
 		dist_ver_w = get_dist_ver_w(tmlx, nor_angle(tmlx->tray->ray_angl), 0);
 		if (dist_ver_w <= dist_hor_w)
 		{

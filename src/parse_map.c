@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:45:25 by emiro-co          #+#    #+#             */
-/*   Updated: 2024/11/19 21:48:11 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:12:08 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	ft_check_map(t_map *map)
 		}
 		y++;
 	}
+	if (map->check.found_init_pos == 0)
+		ft_error("Error: El mapa necesita una posicion inicial");
 }
 
-void	push_line(t_map *map, char *line)
+int	check_empty_line(t_map *map, char *line)
 {
-	char	**new_content;
-	int		i;
 	char	*aux;
 
 	aux = ft_strtrim(line, " \n");
@@ -66,9 +66,19 @@ void	push_line(t_map *map, char *line)
 	(!line || ft_strcmp(aux, "") == 0))
 	{
 		free(aux);
-		return ;
+		return (1);
 	}
 	free(aux);
+	return (0);
+}
+
+void	push_line(t_map *map, char *line)
+{
+	char	**new_content;
+	int		i;
+
+	if (check_empty_line(map, line))
+		return ;
 	check_line(map, line);
 	i = map->check.assigned_lines + 1;
 	new_content = (char **)malloc((i) * sizeof(char *));

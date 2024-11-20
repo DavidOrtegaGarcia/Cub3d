@@ -6,7 +6,7 @@
 /*   By: emiro-co <emiro-co@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 22:09:07 by emiro-co          #+#    #+#             */
-/*   Updated: 2024/11/19 22:09:50 by emiro-co         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:06:35 by emiro-co         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define FOV 60 // field of view
 # define ROTATION_SPD 0.045 // rotation speed
 # define PLAYER_SPD 4 // player speed
+# define COLLISION_MARGIN 2
 
 //	---Structures---
 typedef struct s_fpoint
@@ -146,7 +147,7 @@ float		nor_angle(float angle);
 int			my_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, int color);
 int			get_rgba(int r, int g, int b, int a);
 int			reverse_bytes(int color);
-t_fpoint	hor_angl(float a, t_fpoint h_itr, float *y_stp);
+t_fpoint	hor_angl(float a, float *ray_islft, t_fpoint h_itr, float *y_stp);
 t_fpoint	ver_angl(float a, float *ray_islft, t_fpoint v_itr, float *x_stp);
 
 //	--- PATHS.C ---
