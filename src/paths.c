@@ -3,20 +3,20 @@
 void	get_paths(t_map *map)
 {
 	int		fd;
+	char	*aux;
 	char	*line;
-	char	**splitted;
 
 	fd = open(map->check.path, O_RDONLY);
 	while (map->check.lines_to_map < map->check.map_lines)
 	{
-		line = get_next_line(fd);
-		splitted = ft_split(line, ' ');
-		if (is_element(splitted[0]))
-			assign(map, splitted[1], is_element(splitted[0]));
+		aux = get_next_line(fd);
+		line = ft_strtrim(aux, "\n");
+		free(aux);
+		manage_line(map, line);
 		map->check.lines_to_map++;
-		free(line);
+		//if (line)
+		//	free(line);
 	}
-	free_matrix(splitted, 2);
 	if (found_all(map) == 0)
 		ft_error("Faltan algunos elementos");
 	close(fd);
@@ -26,12 +26,23 @@ t_color	get_color(char *color)
 {
 	t_color	rgb;
 	char	**hex;
+	int		i;
 
+	i = 0;
 	hex = ft_split(color, ',');
-	rgb.r = atoi(hex[0]);
-	rgb.g = atoi(hex[1]);
-	rgb.b = atoi(hex[2]);
-	free(hex);
+	if (!hex || !hex[0] || !hex[1] || !hex[2])
+		ft_error("Formato de color no válido");
+	while (hex[i])
+		i++;
+	if (i != 3)
+		ft_error("At least one color is not valid");
+	rgb.r = ft_atoi(hex[0]);
+	rgb.g = ft_atoi(hex[1]);
+	rgb.b = ft_atoi(hex[2]);
+	if ((rgb.r < 0 || rgb.r > 255) || \
+	(rgb.g < 0 || rgb.g > 255) || (rgb.b < 0 || rgb.b > 255))
+		ft_error("El color seleccionado no es válido");
+	free_matrix(hex, i);
 	return (rgb);
 }
 
@@ -54,4 +65,20 @@ int	found_all(t_map *map)
 	map->check.found_celling == 1)
 		return (1);
 	return (0);
+}
+
+void	ft_check_element(char *line, char **splitted)
+{
+	int		i;
+	char	*aux;
+
+	i = 0;
+	aux = ft_strtrim(line, " \n");
+	if (!line || !splitted || ft_strcmp(aux, "\0") == 0)
+		return ;
+	while (splitted[i])
+		i++;
+	if (i != 2)
+		ft_error("At least one path is not valid");
+	free(aux);
 }
